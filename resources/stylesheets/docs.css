@@ -1,0 +1,15 @@
+---
+---
+body { position: relative; }
+.navbar { margin-bottom: 18px; }
+.navbar-logo { visibility: visible; float: left; padding-top: 6px; }
+.main { position: relative; height: auto; margin-top: -18px; overflow: auto; }
+.page-title { position: relative; top: 24px; font-family: 'Exo', sans-serif; font-size: 24px; font-weight: 400; color: rgba(255, 255, 255, 1); width: 900px;}
+.main-container { background: #ffffff;  min-height: 600px; padding-top: 20px; margin-top: 28px; }
+.pdf-link { float: right; height: 40px; margin-bottom: -15px; margin-top: -5px; }
+.breadcrumb { height: 18px; }
+.breadcrumb li { float: right; }
+.breadcrumb li a { color: #447281; }
+.breadcrumb li a:hover { color: #73a600; text-decoration: none; }
+.breadcrumb li:last-child { float: left; font-weight: bold; }
+/*.footer-bg { overflow: auto; background:url('{{ site.baseurl }}/resources/images/dark-blue-bg.png') repeat; height: 100%; }*/

@@ -1,0 +1,40 @@
+---
+---
+body { position: relative; }
+.navbar { margin-bottom: 0px;}
+.navbar-logo { visibility: visible; float: left; }
+.main { position: relative; height: auto; margin-top: 0px; overflow: auto; }
+.page-title { line-height: 24px; position: relative; font-family: "Source Sans Pro", "Helvetica Neue", sans-serif; font-size: 24px; font-weight: 400; color: rgba(255, 255, 255, 1);  width: 900px; padding: 20px 0; }
+.main-container { background: #ffffff;  min-height: 600px; padding-top: 20px; margin-top: 0px; padding-bottom: 40px; }
+a { color: #15A9CE; }
+a:hover { color: #15A9CE; text-decoration: underline; }
+p { padding-top: 4px; font-size: 14px; }
+h1 {color: #15A9CE; }
+h2 { padding-top: 14px; padding-bottom: 4px; margin-bottom: 2px; border-bottom: solid 1px rgba(0, 0, 0, 0.15); color: #0B5567; }
+h2 a {  color: #0B5567; }
+h2 a:hover { color: #447281; }
+h2 .pre { font-size: 20px; }
+h3 { padding-top: 10px; color: #0B5567; }
+h3 a { color: #0B5567; }
+h3 a:hover { }
+h3 .pre { font-size: 16px; }
+h4 { padding-top: 6px; font-size: 16px; }
+h4 a { color: #0B5567; }
+h4 a:hover { text-shadow:0 2px 0 #0B5567; }
+h5 { text-transform: uppercase; font-size: 14px; padding-top: 6px; color: #0B5567;}
+strong {color: #0B5567; }
+.row { margin-bottom: 14px; }
+.profile-pic { float: left; padding: 10px; margin: 16px; border: solid 1px #d3e1e4; background: rgba(240, 250, 252, 0.6); height: 80px; width: 80px; }
+.profile-pic-wrap { float: left; height: 260px; }
+.profile-name { display: block; margin-top: 20px; margin-bottom: 6px; font-size: 18px; font-family: "Source Sans Pro", "Helvetica Neue", sans-serif; font-size: 24px; font-weight: 400; color: #447281; }
+.profile-title { display: block; margin-top: 6px; font-size: 16px; font-weight: bold; color: #0d2428; }
+.profile-twitter-link { display: block; margin-top: 6px; font-size: 16px; font-weight: bold; }
+.profile-text { padding-top: 10px; }
+.footer h5 { text-transform: none; }
+.committers { font-family: "Source Sans Pro", "Helvetica Neue", sans-serif; font-size: 18px; font-weight: 400; }
+.committers ul { list-style-type: none; margin-left: 30px; }
+.committers li { margin-bottom: 10px; color: #15A9CE; }
+.committers li:before { content:'\2022'; display: block; position: relative; max-width: 0px; max-height: 0px; left: -20px; top: -0px; color: #0d2428; font-size: 20px; }
+.committers a { color: #15A9CE; }
+.committers a:hover { color: #447281; }
+.news-story h2 { border: 0; color: #404040; padding-bottom: 0px; }

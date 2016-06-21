@@ -1,0 +1,20 @@
+---
+layout: page
+title : Let it crash! – the Akka team blog
+header : Let it crash! – the Akka team blog
+group: navigation
+---
+{% include JB/setup %}
+
+{% for post in site.posts %}
+<h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+<p>
+    <strong>{{ post.date | date: "%B %e, %Y" }}</strong>
+    <p class="news-body">{{ post.content | strip_html | truncatewords: 50 }}</p>
+   
+    <small>
+        category: {{ post.category }} 
+        <!--<a href="http://letitcrash.com{{ post.url }}#disqus_thread">comments</a>-->
+    </small>
+</p>
+{% endfor %}
