@@ -1,13 +1,13 @@
 {% include topbar.html %}
 <div class="main">
-	<div class="container rel">
-		<div class="hexagons"></div>
-		<div class="row rel">
-			<div class="span4">
-				<div class="home-box">Build powerful concurrent & distributed applications<br/><span class="bold">more easily</span>.</div>
+  <div class="container rel">
+    <div class="hexagons"></div>
+    <div class="row rel">
+      <div class="span4">
+        <div class="home-box">Build powerful concurrent & distributed applications<br/><span class="bold">more easily</span>.</div>
         <div class="home-small-box">Akka is a toolkit and runtime<br/> for building highly concurrent,<br/> distributed, and resilient<br/> message-driven applications<br/> on the JVM.<br/><br/>The power of Akka is also available on the .NET Framework<br/>and Mono via the <a href="http://getakka.net">Akka.NET project</a>.</div>
-			</div>
-			<div class="span8">
+      </div>
+      <div class="span8">
                 <nav class="social">
                     <a href="//groups.google.com/forum/#!forum/akka-user"><span>Mailing list</span></a>
                     <a href="//twitter.com/akkateam"><span>Twitter</span></a>
@@ -15,46 +15,46 @@
                     <a href="//github.com/akka/akka"><span>Github</span></a>
                     <a href="//stackoverflow.com/questions/tagged/akka"><span>Stackoverflow</span></a>
                 </nav>
-				<div class="simple-concurrency">Simple Concurrency & Distribution
-					<p>Asynchronous and Distributed by Design. High-level abstractions like Actors, Streams and Futures.</p>
-				</div>
-				<div class="fault-tolerance">Resilient by Design
-					<p>Write systems that self-heal. Remote and local supervisor hierarchies.</p>
-				</div>
-				<div class="high-performance">High Performance
-					<p>50 million msg/sec on a single machine. Small memory footprint; ~2.5 million actors per GB of heap.</p>
-				</div>
-				<div class="no-global-state" style="width:220px;">Elastic & Decentralized
-					<p>Adaptive cluster management, load balancing, routing, partitioning and sharding.</p>
-				</div>
-				<div class="extensible">Extensible
-					<p>Use Akka Extensions to adapt Akka to fit your needs.</p>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="simple-concurrency">Simple Concurrency & Distribution
+          <p>Asynchronous and Distributed by Design. High-level abstractions like Actors, Streams and Futures.</p>
+        </div>
+        <div class="fault-tolerance">Resilient by Design
+          <p>Write systems that self-heal. Remote and local supervisor hierarchies.</p>
+        </div>
+        <div class="high-performance">High Performance
+          <p>50 million msg/sec on a single machine. Small memory footprint; ~2.5 million actors per GB of heap.</p>
+        </div>
+        <div class="no-global-state" style="width:220px;">Elastic & Decentralized
+          <p>Adaptive cluster management, load balancing, routing, partitioning and sharding.</p>
+        </div>
+        <div class="extensible">Extensible
+          <p>Use Akka Extensions to adapt Akka to fit your needs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <!--
 <div class="light-strip under-main">
-	
+  
     <div class="container pad">
 
-		<div class="row normal">
-	    <div id="slider">
-	        <ul class="navigation breadcrumb">
-	            <li><a href="#actors">Actors</a></li>
-	            <li><a href="#remoting">Remoting</a></li>
-	            <li><a href="#supervision">Supervision</a></li>
-	        </ul>
-	        <div class="selected-arrow"></div>
+    <div class="row normal">
+      <div id="slider">
+          <ul class="navigation breadcrumb">
+              <li><a href="#actors">Actors</a></li>
+              <li><a href="#remoting">Remoting</a></li>
+              <li><a href="#supervision">Supervision</a></li>
+          </ul>
+          <div class="selected-arrow"></div>
 
-	        <div class="scroll" style="height: 620px">
+          <div class="scroll" style="height: 620px">
             <div class="scrollContainer">
-	            <div class="panel" id="actors">
-	            	<h2>Actors</h2>
-	            	<p>Actors are very lightweight concurrent entities. They process messages asynchronously using an event-driven receive loop. Pattern matching against messages is a convenient way to express an actor's behavior. They raise the abstraction level and make it much easier to write, test, understand and maintain concurrent and/or distributed systems. You focus on workflow—how the messages flow in the system—instead of low level primitives like threads, locks and socket IO. <a href="http://doc.akka.io/docs/akka/snapshot/general/actors.html">Learn More.</a></p>
-	            	<div class="language-header"><div class="scala-header"><a href="http://doc.akka.io/docs/akka/snapshot/scala/actors.html"><img src="{{ site.baseurl }}/resources/images/scala-sm.png"/></a></div><div class="java-header"><a href="http://doc.akka.io/docs/akka/snapshot/java/untyped-actors.html">Java</a></div></div>
-	            	<div class="scala-codebox">
+              <div class="panel" id="actors">
+                <h2>Actors</h2>
+                <p>Actors are very lightweight concurrent entities. They process messages asynchronously using an event-driven receive loop. Pattern matching against messages is a convenient way to express an actor's behavior. They raise the abstraction level and make it much easier to write, test, understand and maintain concurrent and/or distributed systems. You focus on workflow—how the messages flow in the system—instead of low level primitives like threads, locks and socket IO. <a href="http://doc.akka.io/docs/akka/snapshot/general/actors.html">Learn More.</a></p>
+                <div class="language-header"><div class="scala-header"><a href="http://doc.akka.io/docs/akka/snapshot/scala/actors.html"><img src="{{ site.baseurl }}/resources/images/scala-sm.png"/></a></div><div class="java-header"><a href="http://doc.akka.io/docs/akka/snapshot/java/untyped-actors.html">Java</a></div></div>
+                <div class="scala-codebox">
 <pre class="prettyprint lang-scala linenums">
 case class Greeting(who: String)
 
@@ -68,8 +68,8 @@ val system = ActorSystem("MySystem")
 val greeter = system.actorOf(Props[GreetingActor], name = "greeter")
 greeter ! Greeting("Charlie Parker")
 </pre>
-								</div>
-	            	<div class="java-codebox">
+                </div>
+                <div class="java-codebox">
 <pre class="prettyprint lang-java linenums">
 public class Greeting implements Serializable {
   public final String who;
@@ -89,15 +89,15 @@ ActorSystem system = ActorSystem.create("MySystem");
 ActorRef greeter = system.actorOf(Props.create(GreetingActor.class), "greeter");
 greeter.tell(new Greeting("Charlie Parker"), ActorRef.noSender());
 </pre>
-								</div>
-	            </div>
-	            <div class="panel" id="remoting" style="height: 1200px">
+                </div>
+              </div>
+              <div class="panel" id="remoting" style="height: 1200px">
 <h2>Remoting</h2>
 <p>Actors are location transparent and distributable by design. This means that you can write your application without hardcoding how it
 will be deployed and distributed, and then later just configure your actor system against a certain topology with all of the application’s
 semantics, including actor supervision, retained. <a href="http://doc.akka.io/docs/akka/snapshot/general/remoting.html">Learn more.</a></p>
-	            	<div class="language-header"><div class="scala-header"><a href="http://doc.akka.io/docs/akka/snapshot/scala/remoting.html"><img src="{{ site.baseurl }}/resources/images/scala-sm.png"/></a></div><div class="java-header"><a href="http://doc.akka.io/docs/akka/snapshot/java/remoting.html">Java</a></div></div>
-	            	<div class="scala-codebox">
+                <div class="language-header"><div class="scala-header"><a href="http://doc.akka.io/docs/akka/snapshot/scala/remoting.html"><img src="{{ site.baseurl }}/resources/images/scala-sm.png"/></a></div><div class="java-header"><a href="http://doc.akka.io/docs/akka/snapshot/java/remoting.html">Java</a></div></div>
+                <div class="scala-codebox">
 <pre class="prettyprint lang-scala linenums">
 // ------------------------------
 // config on all machines
@@ -137,8 +137,8 @@ val system = ActorSystem("MySystem")
 val greeter = system.actorSelection("akka.tcp://MySystem@machine2:2552/user/greeter")
 greeter ! Greeting("Sonny Rollins")
 </pre>
-								</div>
-	            	<div class="java-codebox">
+                </div>
+                <div class="java-codebox">
 <pre class="prettyprint lang-java linenums">
 // ------------------------------
 // config on all machines
@@ -184,16 +184,16 @@ ActorSystem system = ActorSystem.create("MySystem");
 ActorSelection greeter = system.actorSelection("akka.tcp://MySystem@machine2:2552/user/greeter");
 greeter.tell(new Greeting("Sonny Rollins"), ActorRef.noSender());
 </pre>
-								</div>
-	            </div>
-	            <div class="panel" id="supervision" style="height: 750px">
-	            	<h2>Supervision</h2>
-	            	<p>Actors form a tree with actors being parents to the actors they've created. As a parent, the actor is responsible for handling its
+                </div>
+              </div>
+              <div class="panel" id="supervision" style="height: 750px">
+                <h2>Supervision</h2>
+                <p>Actors form a tree with actors being parents to the actors they've created. As a parent, the actor is responsible for handling its
 children’s failures (so-called supervision), forming a chain of responsibility, all the way to the top. When an actor crashes, its
 parent can either restart or stop it, or escalate the failure up the hierarchy of actors. This enables a clean set of semantics for
 managing failures in a concurrent, distributed system and allows for writing highly fault-tolerant systems that self-heal. <a href="http://doc.akka.io/docs/akka/snapshot/general/actor-systems.html">Learn more.</a></p>
-								<div class="language-header"><div class="scala-header"><a href="http://doc.akka.io/docs/akka/snapshot/scala/fault-tolerance.html"><img src="{{ site.baseurl }}/resources/images/scala-sm.png"/><a/></div><div class="java-header"><a href="http://doc.akka.io/docs/akka/snapshot/java/fault-tolerance.html">Java</a></div></div>
-	            	<div class="scala-codebox">
+                <div class="language-header"><div class="scala-header"><a href="http://doc.akka.io/docs/akka/snapshot/scala/fault-tolerance.html"><img src="{{ site.baseurl }}/resources/images/scala-sm.png"/><a/></div><div class="java-header"><a href="http://doc.akka.io/docs/akka/snapshot/java/fault-tolerance.html">Java</a></div></div>
+                <div class="scala-codebox">
 <pre class="prettyprint lang-scala linenums">
 class Supervisor extends Actor {
   override val supervisorStrategy =
@@ -211,8 +211,8 @@ class Supervisor extends Actor {
 }
 </pre>
 
-								</div>
-	            	<div class="java-codebox">
+                </div>
+                <div class="java-codebox">
 <pre class="prettyprint lang-java linenums">
 class Supervisor extends UntypedActor {
 
@@ -238,51 +238,51 @@ class Supervisor extends UntypedActor {
   }
 }
 </pre>
-								</div>
-	            </div>
+                </div>
+              </div>
             </div>
-	        </div>
-	        <div id="shade"></div>
-	    </div>
-		</div>
-	</div>
+          </div>
+          <div id="shade"></div>
+      </div>
+    </div>
+  </div>
 </div>
 -->
 <div class="darker-strip">
-	<div class="container pad">
+  <div class="container pad">
 
-		<div class="row normal">
-			<div class="span12">
-				<div class="used-by-header"><span class="text">SELECTION OF PRODUCTION USERS</span></div>
-				<div class="used-by-logos">
-					{% include company-logos.html %}
-				</div>
-			</div>
-		</div>
+    <div class="row normal">
+      <div class="span12">
+        <div class="used-by-header"><span class="text">SELECTION OF PRODUCTION USERS</span></div>
+        <div class="used-by-logos">
+          {% include company-logos.html %}
+        </div>
+      </div>
+    </div>
 
-	</div>
-	<div class="between-dark-strips"></div>
-	<div class="container three-bars">
-		<div class="row">
+  </div>
+  <div class="between-dark-strips"></div>
+  <div class="container three-bars">
+    <div class="row">
 
-			<div class="span4">
-				<h2><a href="https://twitter.com/#!/akkateam">@akkateam</a> on Twitter</h2>
-				<a class="twitter-timeline"  href="https://twitter.com/akkateam" data-widget-id="390404144256659456" data-theme="light" data-link-color="#447281" data-chrome="noheader nofooter noborders transparent">Tweets by @akkateam</a>
-				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-			</div>
+      <div class="span4">
+        <h2><a href="https://twitter.com/#!/akkateam">@akkateam</a> on Twitter</h2>
+        <a class="twitter-timeline"  href="https://twitter.com/akkateam" data-widget-id="390404144256659456" data-theme="light" data-link-color="#447281" data-chrome="noheader nofooter noborders transparent">Tweets by @akkateam</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+      </div>
 
-			<div class="span4">
-				<h2><a href="http://letitcrash.com">Team Blog</a></h2>
-				<div id="blog-feed"></div>
-				<span class="rss-icon"><a href="http://letitcrash.com/rss"><img src="{{ site.baseurl }}/resources/images/rss.png" height="20px" width="20px" /></a></span>
-			</div>
+      <div class="span4">
+        <h2><a href="http://letitcrash.com">Team Blog</a></h2>
+        <div id="blog-feed"></div>
+        <span class="rss-icon"><a href="http://letitcrash.com/rss"><img src="{{ site.baseurl }}/resources/images/rss.png" height="20px" width="20px" /></a></span>
+      </div>
 
-			<div class="span4">
-				<h2><a href="{{ site.baseurl }}/news">News</a></h2>
-				{% include news-feed.html %}
-				<span class="rss-icon"><a href="https://github.com/akka/akka.github.com/commits/master/news/_posts.atom"><img src="{{ site.baseurl }}/resources/images/rss.png" height="20px" width="20px" /></a></span>
-			</div>
+      <div class="span4">
+        <h2><a href="{{ site.baseurl }}/news">News</a></h2>
+        {% include news-feed.html %}
+        <span class="rss-icon"><a href="https://github.com/akka/akka.github.com/commits/master/news/_posts.atom"><img src="{{ site.baseurl }}/resources/images/rss.png" height="20px" width="20px" /></a></span>
+      </div>
 
-		</div>
-	</div>
+    </div>
+  </div>
 </div>
