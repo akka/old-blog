@@ -24,14 +24,14 @@ In this post, I will explore how Akka Streams processing pipelines or graphs are
 
 > All of the code in the post assumes the akka-stream artifact of at least version 2.4.2 to be present, and the following code implicitly being present in all samples. Always use the latest minor release – **2.4.7** as of writing this blog post.:
 
-```
+<pre><code class="scala">
 import akka.actor.ActorSystem
 import akka.stream._
 import akka.stream.scaladsl._
 
 val system = ActorSystem("LifecycleDemo")
 implicit val materializer = ActorMaterializer.create(system)
-```
+</code></pre>
 
 In Akka Streams, we mostly think in terms of computations -"boxes" that can accept and emit elements of a certain type in sequence on their various ports. In this view, a Source is not a static collection of elements; not like an Iterator, because computations can happen asynchronously, working concurrently with other computations. An Iterator always executes any chained computations on the caller thread. For more details on the role of modularity I recommend this section in the documentation: [http://doc.akka.io/docs/akka/2.4/scala/stream/stream-composition.html](http://doc.akka.io/docs/akka/2.4/scala/stream/stream-composition.html)
 
@@ -39,7 +39,7 @@ In this post I assume some familiarity with the concepts explained in the linked
 
 As our first step, let’s try a simple experiment and see if we can figure out how computations are mapped to threads:
 
-```
+```scala
 println(Thread.currentThread().getName)
 
 Source.single("Hello")
@@ -60,7 +60,7 @@ running
 
 We expected to see something printed out by the stream itself, but it did not happen! We clearly see the printed lines from our main thread `run-main-1`, but the program prints nothing else. And `.run()` was called on the graph. Before diving into the  explanation, let’s tweak the example a little bit:
 
-```
+```scala
 println(Thread.currentThread().getName)
 
 Source.single("Hello")
@@ -95,7 +95,7 @@ We already know that the stream will run on a different thread, but it is not  c
 3. We explicitly wait on the completion of the stream by using Await on the Future we got in the previous step
 4. We print the current thread at each stage
 
-```
+```scala
 import scala.concurrent.Await
 // To make the fancy "3.seconds" expression work
 import scala.concurrent.duration._ 
@@ -125,7 +125,7 @@ The following sample is an extension of the previous one:
 * We extract the `map` steps into a method called `processingStage` returning a `Flow` to avoid repeating ourselves. (Remember, everything is a "processing box" in Akka Streams, `map` is no exception! You can think about map as a processor that takes elements in sequence through its input port, then emits them transformed (and in-sequence) through its output port. Flow is just a sequence of free-standing transformation stages, not attached to a particular Source yet.)
 * We add a `.async` call after each of our `map` stages. We will see the significance of this immediately when we look at the output of the program.
 
-```
+```scala
 def processingStage(name: String): Flow[String, String, NotUsed] = 
  Flow[String].map { s ⇒
    println(name + " started processing " + s + " on thread " + Thread.currentThread().getName)
@@ -169,7 +169,7 @@ C finished processing World!
 Got output World!
 ```
 
-There are *many *interesting things here. Remember that number "5" at the end of one of the thread names before? Now there are others! On top of that, it seems like that things no longer happen in a simple order as before. Calls in stages A, B and C overlap. At the point when C starts processing “Hello”, A already started processing the final element, “World!”. On the other hand, if we look at the output of the final print, we see that “Hello”, “Streams” and “World!” arrived in sequence. In short, we have concurrency and at the same time we still maintain the order of elements. Even shorter: *an assembly line*. We also notice that we have several threads at play here. In fact, it seems like that there is a thread for each map stage we have. This is not exactly true though, the real explanation is that there is a thread-pool from which stages borrow threads to execute tasks, but the number of the threads in the pool is bounded and shared by all the streams that are executed. Why not create a thread for each stream or each stream stage? The reason is that it is not efficient enough, it is much better to share a common pool of threads, roughly containing as many threads as cores are available. It is out of the scope of this post to elaborate on this, but a good resource is on Intel’s site: [https://software.intel.com/en-us/node/506100](https://software.intel.com/en-us/node/506100)
+There are *many* interesting things here. Remember that number "5" at the end of one of the thread names before? Now there are others! On top of that, it seems like that things no longer happen in a simple order as before. Calls in stages A, B and C overlap. At the point when C starts processing “Hello”, A already started processing the final element, “World!”. On the other hand, if we look at the output of the final print, we see that “Hello”, “Streams” and “World!” arrived in sequence. In short, we have concurrency and at the same time we still maintain the order of elements. Even shorter: *an assembly line*. We also notice that we have several threads at play here. In fact, it seems like that there is a thread for each map stage we have. This is not exactly true though, the real explanation is that there is a thread-pool from which stages borrow threads to execute tasks, but the number of the threads in the pool is bounded and shared by all the streams that are executed. Why not create a thread for each stream or each stream stage? The reason is that it is not efficient enough, it is much better to share a common pool of threads, roughly containing as many threads as cores are available. It is out of the scope of this post to elaborate on this, but a good resource is on Intel’s site: [https://software.intel.com/en-us/node/506100](https://software.intel.com/en-us/node/506100)
 
 Putting together the new facts that we learned:
 
