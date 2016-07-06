@@ -8,7 +8,7 @@ white dkr C1D2DC
 white ltr EFF2F5
 */
 body {background: #15A9CE; color: #0B5567; }
-p { font-size: 14px; }
+p { font-size: 14px; text-align: justify; }
 a { color: #15A9CE; }
 a:hover { color: #15A9CE; text-decoration: underline; }
 .navbar { background: #ffffff; position: relative; z-index: 150; margin-bottom: 0px; border-top: solid 5px #15A9CE; height: 75px;}
