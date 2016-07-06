@@ -2,6 +2,7 @@
 layout: post
 title: "Threading & Concurrency in Akka Streams Explained (part I)"
 description: ""
+author: Endre Varga
 category: streams
 tags: [streams,internals,intro]
 ---
@@ -36,7 +37,10 @@ In Akka Streams, we mostly think in terms of computations -"boxes" that can acce
 
 In this post I assume some familiarity with the concepts explained in the linked documentation page.
 
-As our first step, let’s try a simple experiment and see if we can figure out how computations are mapped to threads:```println(Thread.currentThread().getName)
+As our first step, let’s try a simple experiment and see if we can figure out how computations are mapped to threads:
+
+```
+println(Thread.currentThread().getName)
 
 Source.single("Hello")
  .map(_ + " Stream World!")
