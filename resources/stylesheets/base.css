@@ -107,8 +107,8 @@ pre { border: 0px solid #333; background-color: transparent;}
 .feed-author { font-size: 11px; color: #888888;}
 .feed-body { margin-bottom: 14px;}
 .news-item { margin-bottom: 14px;}
-.news-date { display: inline; font-family: "Source Sans Pro", "Helvetica Neue", sans-serif; font-size: 14px; font-weight: 500; line-height: 16px; color: #15A9CE; }
-.news-author { font-family: "Source Sans Pro", "Helvetica Neue", sans-serif; font-size: 12px; font-weight: 500; line-height: 15px; color: #447281; }
+.news-date { font-family: "Source Sans Pro", "Helvetica Neue", sans-serif; font-size: 14px; font-weight: 500; line-height: 16px; color: #15A9CE; text-align: right !important; }
+.news-author { font-family: "Source Sans Pro", "Helvetica Neue", sans-serif; font-size: 12px; font-weight: 500; line-height: 15px; color: #447281; text-align: right; }
 .news-title { font-family: "Source Sans Pro", "Helvetica Neue", sans-serif; font-size: 18px; font-weight: 400; line-height: 20px; margin-bottom: 4px;}
 .news-title a { color: #447281;  }
 .news-title a:hover { color: #15A9CE; text-decoration: none; }

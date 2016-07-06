@@ -191,5 +191,3 @@ To summarize what we have learned:
 * Stages do not run on a dedicated thread, but they borrow one from a common pool for a short period.
 
 In the next part, we will explore more general graphs (we only looked at linear pipelines so far), how stream completion progresses, and how synchronous islands can still maintain concurrency and more generally, nondeterminism.
-
--- Endre Varga

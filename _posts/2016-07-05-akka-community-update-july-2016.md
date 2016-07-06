@@ -60,5 +60,3 @@ The [letitcrash.com](http://letitcrash.com/) blog will be kept as-is, which is m
 
 The [lightbend.com blog](https://www.lightbend.com/blog) remains active and focused on delivering top notch webinars, case-studies, white papers and more - many of which contain Akka content so it is highly recommended to keep an eye on it as well.
 
--- Konrad `ktoso` Malawski
-
