@@ -7,8 +7,6 @@ tags: [community,contributing,akka]
 ---
 {% include JB/setup %}
 
-# Akka Community update July 2016
-
 Dear hakkers,
 
 With great joy and pleasure we bring to you... the rebooted Akka team blog! 

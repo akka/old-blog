@@ -260,8 +260,15 @@ ul.tabs li.current {
 }
 
 .next-to-logo {
+  color: #0b5567;
   font-weight: bold;
   font-size: 39px;
   position: relative;
   top: -26px;
+  text-decoration: none !important;
+}
+
+.next-to-logo a {
+  color: #0b5567;
+  text-decoration: none !important;
 }

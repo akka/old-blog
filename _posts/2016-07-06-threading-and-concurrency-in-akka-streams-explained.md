@@ -7,8 +7,6 @@ tags: [streams,internals,intro]
 ---
 {% include JB/setup %}
 
-# Threading & Concurrency in Akka Streams Explained (part I)
-
 Akka Streams and streaming has different meaning to different people, but my view is that it is mostly a concurrency construct, like Actors and Futures. The primary goal of streams is to provide a simple way to:
 
 * build *concurrent and memory bounded* computations 
