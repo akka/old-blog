@@ -15,7 +15,7 @@ With great joy and pleasure we bring to you... the rebooted Akka team blog!
 
 This blog aims to provide you with high quality technical content straight from the core team. We’ll go into more detail about "why this blog?", and how it relates to the other blogs or news pages we have in a section below. Since this is our first blog post here, let’s take a second to retrospect on the community aspect of what we’ve been doing in the last year, and where we’re headed next.
 
-To not leave you waiting for some actual technical meat, we’ve decided to already publish the first of a series of posts about Akka Streams, you can read it here…..
+To not leave you waiting for some actual technical meat, we’ve decided to already publish the first of a series of posts about Akka Streams, you can read it here: [Threading & Concurrency in Akka Streams Explained (part I)](http://blog.akka.io/streams/2016/07/05/threading-and-concurrency-in-akka-streams-explained).
 
 ## Contributing highly encouraged!
 
