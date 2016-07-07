@@ -92,11 +92,10 @@ We already know that the stream will run on a different thread, but it is not  c
 
 1. We replace `.to(..).run()` with the shorthand `.runWith()`
 2. The above change also affected our materialized value (for those unaware of materialized values, please read the relevant section of the documentation [http://doc.akka.io/docs/akka/2.4/scala/stream/stream-composition.html#Materialized_values](http://doc.akka.io/docs/akka/2.4/scala/stream/stream-composition.html#Materialized_values)), returning a Future which completes once Sink.foreach completes processing.
-3. We explicitly wait on the completion of the stream by using Await on the Future we got in the previous step
+3. We only shut down the ActorSystem after the stream has completed (by using `onComplete` on the returned materialized value which is a `Future`)
 4. We print the current thread at each stage
 
 ```scala
-import scala.concurrent.Await
 // To make the fancy "3.seconds" expression work
 import scala.concurrent.duration._ 
 
@@ -105,10 +104,10 @@ val completion = Source.single("Hello Stream World!\n")
  .map { s ⇒ println(Thread.currentThread().getName() + " " + s); s }
  .runWith(Sink.foreach(s ⇒ println(Thread.currentThread().getName + " " + s)))
 
-Await.result(completion, 3.seconds) // *don't Await in your real code!*
+completion.onComplete { 
+  case c => system.terminate()
+}
 ```
-
-> `Await.result` should be used with *extreme care*, as it is a blocking operation. It is fine to use it in test code, but rarely appropriate (or outright *dangerous*) to call it inside actors, futures or stream operations. We use it here to properly sequence our system shutdown related to the completion of the stream.
 
 The following code snippet should give us information about all the threads involved in the two map operations and the foreach block. The output:
 
@@ -140,7 +139,9 @@ val completion = Source(List("Hello", "Streams", "World!"))
  .via(processingStage("C")).async
  .runWith(Sink.foreach(s ⇒ println("Got output " + s)))
 
-Await.result(completion, 3.seconds)
+completion.onComplete { 
+  case c => system.terminate()
+}
 ```
 
 And the output is now:
