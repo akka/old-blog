@@ -104,9 +104,7 @@ val completion = Source.single("Hello Stream World!\n")
  .map { s ⇒ println(Thread.currentThread().getName() + " " + s); s }
  .runWith(Sink.foreach(s ⇒ println(Thread.currentThread().getName + " " + s)))
 
-completion.onComplete { 
-  case c => system.terminate()
-}
+completion.onComplete(_ => system.terminate())
 ```
 
 The following code snippet should give us information about all the threads involved in the two map operations and the foreach block. The output:
@@ -139,9 +137,7 @@ val completion = Source(List("Hello", "Streams", "World!"))
  .via(processingStage("C")).async
  .runWith(Sink.foreach(s ⇒ println("Got output " + s)))
 
-completion.onComplete { 
-  case c => system.terminate()
-}
+completion.onComplete(_ => system.terminate())
 ```
 
 And the output is now:
