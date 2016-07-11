@@ -96,9 +96,6 @@ We already know that the stream will run on a different thread, but it is not  c
 4. We print the current thread at each stage
 
 ```scala
-// To make the fancy "3.seconds" expression work
-import scala.concurrent.duration._ 
-
 val completion = Source.single("Hello Stream World!\n")
  .map { s ⇒ println(Thread.currentThread().getName() + " " + s); s }
  .map { s ⇒ println(Thread.currentThread().getName() + " " + s); s }
