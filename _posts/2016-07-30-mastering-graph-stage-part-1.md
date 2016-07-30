@@ -19,7 +19,7 @@ Backpressure, in general, is a method where a consumer is able to regulate the r
 
 When we talk about backpressure, we usually assume that the two entities, the producer and consumer can progress independently, concurrently, otherwise there is not much need to regulate rates since they execute in lock-step, synchronously. Right? Almost. It is quite possible that a long chain of single-threaded computations is sandwiched between a concurrent producer and consumer:
 
-![Relation of GraphStage and Async boundaries explained]({{ site.url }}/assets/graph-stage-00-buffers.png)
+![Synchronous islands and GraphStages]({{ site.url }}/assets/graph-stage-00-fusing-and-boundaries.png)
 
 Although the stages of the pipeline in-between execute synchronously, in lock-step, they must still preserve backpressure across all steps of the chain. One example would be a stage in the pipeline that is a 1-to-N stage, emitting multiple elements for each consumed element. In this case, even though the downstream consumer can accept, let’s say 100 elements per second, and the upstream producer does not provide more than 50 elements per second, putting a 1-to-100 stage in-between will still result in overwhelming the consumer fiftyfold. Take for example an upstream producer of user identifiers: its output processed by a stage that emits the last 100 activities for that user id will amplify the rate of user ids hundredfold. It is clear that the stage itself must properly translate the backpressure signal between its upstream and downstream. If there are several such stages in a synchronous chain, then the translation must happen *at each of them even though they are running synchronously*. Somewhat more complicated is the situation when N-to-1 stages are added to the chain (think of a simple `.filter()`). As a consequence, we wanted to have an abstraction that preserves and properly translates backpressure in synchronous and asynchronous settings as we expected a mixture of these to be used in practice.
 
@@ -29,11 +29,11 @@ There is one important simplification that we figured out early when we experime
 
 * Push - a producer can `push` to its output if it has been pulled before. It cannot push again until a new pull arrives
 
-(these states, and the full state-space of input and output ports are fully described in the documentation: [http://doc.akka.io/docs/akka/2.4/scala/stream/stream-customize.html#Port_states__InHandler_and_OutHandler](http://doc.akka.io/docs/akka/2.4/scala/stream/stream-customize.html#Port_states__InHandler_and_OutHandler))
+(these states, and the full state-space of input and output ports are fully described in the documentation: [Port_states: InHandler and OutHandler](http://doc.akka.io/docs/akka/2.4/scala/stream/stream-customize.html#Port_states__InHandler_and_OutHandler))
 
 This is a very simple model, but one might wonder, how does this map to the more generic permit based model of Reactive Streams? It would be very inefficient if Akka Streams based Subscribers would request from a Publisher one-by-one, instead of requesting larger batches, since in an asynchronous setting all communication have a cost. The solution is that in Akka Streams, a stage that has an asynchronous upstream pulls from a *buffer*, not directly from the upstream Publisher, and *it is the buffer that requests *new elements once a certain number of elements have been taken out (usually half the buffer size).
 
-![GraphStage and buffers explained]({{ site.url }}/assets/graph-stage-00-fusing-and-boundaries.png)
+![GraphStage and async boundary buffer relationship]({{ site.url }}/assets/graph-stage-00-buffers.png)
 
 In summary, the GraphStage API provides a simplified model of Reactive Streams backpressure and a model that works seamlessly in asynchronous and synchronous settings (and the mixture of these), handling all the buffering automatically for you. On top of this, we also hide all the nitty-gritty details of the Reactive Streams specifications from you: it is not necessary to test your stages against the TCK as they are already conforming by design. 
 
@@ -78,7 +78,7 @@ What if you need something more complex, something with multiple inputs and outp
 
 In many cases, might need to receive events from the external world in a non-streaming way while interacting with streams. Timers are one example, but we might be also interested in a completion of a Future, or we might want to receive messages from an actor. This is all possible with GraphStages, without forfeiting any of the nice safety features! External events are handled in your stage via callback you provide. These still maintain the sequential ordering guarantee just like any of the stream related callbacks. You can still safely access the state of your stage. And of course, error handling works as usual.
 
-These features will all be detailed in future posts of this series, for now, you can look at the documentation for more detailed explanation: ([http://doc.akka.io/docs/akka/2.4/scala/stream/stream-customize.html#Using_timers](http://doc.akka.io/docs/akka/2.4/scala/stream/stream-customize.html#Using_timers) [http://doc.akka.io/docs/akka/2.4/scala/stream/stream-customize.html#Using_asynchronous_side-channels](http://doc.akka.io/docs/akka/2.4/scala/stream/stream-customize.html#Using_asynchronous_side-channels))
+These features will all be detailed in future posts of this series, for now, you can look at the documentation for more detailed explanation: ([Using timers](http://doc.akka.io/docs/akka/2.4/scala/stream/stream-customize.html#Using_timers), [Using asynchronous side-channels](http://doc.akka.io/docs/akka/2.4/scala/stream/stream-customize.html#Using_asynchronous_side-channels))
 
 ### Is there anything else?
 
