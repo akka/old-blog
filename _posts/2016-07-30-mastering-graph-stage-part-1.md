@@ -29,7 +29,7 @@ There is one important simplification that we figured out early when we experime
 
 * Push - a producer can `push` to its output if it has been pulled before. It cannot push again until a new pull arrives
 
-(these states, and the full state-space of input and output ports are fully described in the documentation: [Port_states: InHandler and OutHandler](http://doc.akka.io/docs/akka/2.4/scala/stream/stream-customize.html#Port_states__InHandler_and_OutHandler))
+(these states, and the full state-space of input and output ports are fully described in the documentation: [Port states: InHandler and OutHandler](http://doc.akka.io/docs/akka/2.4/scala/stream/stream-customize.html#Port_states__InHandler_and_OutHandler))
 
 This is a very simple model, but one might wonder, how does this map to the more generic permit based model of Reactive Streams? It would be very inefficient if Akka Streams based Subscribers would request from a Publisher one-by-one, instead of requesting larger batches, since in an asynchronous setting all communication have a cost. The solution is that in Akka Streams, a stage that has an asynchronous upstream pulls from a *buffer*, not directly from the upstream Publisher, and *it is the buffer that requests *new elements once a certain number of elements have been taken out (usually half the buffer size).
 
