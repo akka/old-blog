@@ -1,4 +1,9 @@
 Akka Team blog: Let it crash!
------------------------------
+=============================
 
-TODO write something here
+Writing a post
+--------------
+
+```
+rake post --title="hakking the planet 101"
+```
