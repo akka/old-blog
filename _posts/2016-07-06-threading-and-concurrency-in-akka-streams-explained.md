@@ -96,6 +96,8 @@ We already know that the stream will run on a different thread, but it is not  c
 4. We print the current thread at each stage
 
 ```scala
+import system.dispatcher
+
 val completion = Source.single("Hello Stream World!\n")
  .map { s ⇒ println(Thread.currentThread().getName() + " " + s); s }
  .map { s ⇒ println(Thread.currentThread().getName() + " " + s); s }
@@ -120,6 +122,8 @@ The following sample is an extension of the previous one:
 * We add a `.async` call after each of our `map` stages. We will see the significance of this immediately when we look at the output of the program.
 
 ```scala
+import akka.NotUsed
+
 def processingStage(name: String): Flow[String, String, NotUsed] = 
  Flow[String].map { s ⇒
    println(name + " started processing " + s + " on thread " + Thread.currentThread().getName)
