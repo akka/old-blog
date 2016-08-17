@@ -147,7 +147,7 @@ Some libraries have APIs where data is acquired by calling a polling method, the
 This one is hard to adapt, but most important is to isolate it from the rest of the system as mentioned in the Blocking Push section above.
 
 ### Timed and Non-blocking polling
-A more resource friendly variation of blocking polling is where you can provide a timeout to the blocking poll making fail or return if there was no data. A special case of this is non blocking polling, where the call always returns right away even if there is no elements. Both these two can be integrated in the same way, when there is demand, we poll (with a very short timeout in the timed case) and if we get no data back we schedule a slight back off, and then check again.
+A more resource friendly variation of blocking polling is where you can provide a timeout to the blocking poll making fail or return if there was no data. A special case of this is non blocking polling, where the call always returns right away even if there is no elements. Both these two can be integrated in the same way. When there is demand, we poll (with a very short timeout in the timed case) and if we get no data back we schedule a slight back off, and then check again.
 
 This can be implemented using the `TimedGraphStageLogic` which provides a facility for scheduling calls to a method which can then do the polling. In this sample we do exactly this to poll the WatchService for filesystem changes:
 
