@@ -129,7 +129,7 @@ def handleDelivery(message: IncomingMessage): Unit = {
 ```
 [complete sources](https://github.com/akka/akka-stream-contrib/blob/master/amqp/src/main/scala/akka/stream/contrib/amqp/AmqpSource.scala#L112)
 
-It is therefore very important to isolate such stages on a separate dispatcher, preferably thread pool based ones. The number of threads will limit how many concurrent instances of the GraphStageLogic can run on the system but will not affect other parts.
+It is important to isolate such stages on a separate dispatcher, preferably thread pool based ones. The number of threads will limit how many concurrent instances of the `GraphStageLogic` can run on the system but will not affect other parts.
 
 Selecting a separate dispatcher in Akka Streams is done by returning it from the `initialAttributes` of the `GraphStage`. (Note that this will isolate the `GraphStageLogic` into a separate actor when materializing and therefore introduce an input buffer to optimize passing the asynchronous boundary, read more
 in the docs: [Scala](http://doc.akka.io/docs/akka/2.4/scala/stream/stream-rate.html#Buffers_for_asynchronous_stages) and [Java](http://doc.akka.io/docs/akka/2.4/java/stream/stream-rate.html#Buffers_for_asynchronous_stages))
