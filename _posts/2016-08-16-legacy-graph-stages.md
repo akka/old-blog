@@ -43,7 +43,7 @@ chunkCallback = createAsyncCallback((tryInteger) -> {
  }
 });
 ```
-[complete source](https://github.com/akka/akka-stream-contrib/blob/master/contrib/src/main/java/akka/stream/contrib/FileTailSource.java#L90)
+[complete sources](https://github.com/akka/akka-stream-contrib/blob/master/contrib/src/main/java/akka/stream/contrib/FileTailSource.java#L90)
 
 We then use that callback in the `CompletionHandler` which is how the `java.nio` API will call us back. Note that there is an “attachment” passed as a parameter from the read to the callback and the actual consumer is stateless meaning that in this specific case we can keep a consumer singleton and share it between all instances of the `GraphStageLogic` without problems.
 
@@ -165,7 +165,7 @@ public void onTimer(Object timerKey) {
   }
 }
 ```
-[original sources](https://github.com/akka/akka-stream-contrib/blob/master/contrib/src/main/java/akka/stream/contrib/DirectoryChanges.java#L105)
+[complete sources](https://github.com/akka/akka-stream-contrib/blob/master/contrib/src/main/java/akka/stream/contrib/DirectoryChanges.java#L105)
 
 Let's combine two of these samples into a stream that will emit local log entries tailed from a textfile as they are written and push each line to an AMQP broker:
 
@@ -177,4 +177,4 @@ FileTailSource.create(logfile, 4096, 0, FiniteDuration.create(250, TimeUnit.MILL
   .to(AmqpSink.simple(settings))
   .run(materializer);
 ```
-[complete sample](https://gist.github.com/johanandren/41b096c9ee647863c6c04959be548b25)
+[complete sources](https://gist.github.com/johanandren/41b096c9ee647863c6c04959be548b25)
