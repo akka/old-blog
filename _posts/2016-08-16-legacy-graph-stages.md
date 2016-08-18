@@ -24,7 +24,7 @@ This sample code is taken from the [FileTailSource](https://github.com/akka/akka
 
 We first acquire a the `AsyncCallback` pointing to a local function that will be what actually handles the read bytes. `AsyncCallback` will only handle a single parameter, so we need to use a datatype that covers all the information we want to pass on, in this case we use the [scala.util.Try](http://www.scala-lang.org/api/2.11.8/index.html#scala.util.Try) data structure here which will either be a `Success(bytes)` or a `Failure(exception)` but this is not mandatory and you could of course use whatever class that fits your use case:
 
-```Java
+```java
 chunkCallback = createAsyncCallback((tryInteger) -> {
  if (tryInteger.isSuccess()) {
    int readBytes = tryInteger.get();
@@ -48,7 +48,7 @@ chunkCallback = createAsyncCallback((tryInteger) -> {
 We then use that callback in the `CompletionHandler` which is how the `java.nio` API will call us back. Note that there is an “attachment” passed as a parameter from the read to the callback and the actual consumer is stateless meaning that in this specific case we can keep a consumer singleton and share it between all instances of the `GraphStageLogic` without problems.
 
 We pass the callback and the completion handler to `read`:
-```Java
+```java
 private void doPull() {
   channel.read(buffer, position, chunkCallback, completionHandler);
 }
@@ -56,7 +56,7 @@ private void doPull() {
 [complete sources](https://github.com/akka/akka-stream-contrib/blob/master/contrib/src/main/java/akka/stream/contrib/FileTailSource.java#L116)
 
 Which will invoke either of the two methods on the `CompletionHandler` when the read operation completes:
-```Java
+```java
 new CompletionHandler<Integer, AsyncCallback<Try<Integer>>>() {
   @Override
   public void completed(Integer result, AsyncCallback<Try<Integer>> attachment) {
@@ -78,7 +78,7 @@ A more complex example of an asynchronous callback is the AMQP connector source,
 
 The graph stage registers a listener which will be invoked when a message is available, and we use an `AsyncCallback` to make sure execution will be on the right thread:
 
-```Scala
+```scala
 val consumerCallback = getAsyncCallback(handleDelivery)
 val shutdownCallback = getAsyncCallback[Option[ShutdownSignalException]] {
   case Some(ex) => failStage(ex)
@@ -118,7 +118,7 @@ This alone does not help us with backpressure though, luckily the RabbitMQ clien
 
 As an optimization we keep an internal buffer that can fit exactly this number of elements so that incoming messages can be batched rather than sent one by one from the message broker. When downstream is ready to process a message we take it out of the buffer and emit it downstream, we then send an ACK back to the broker so that we can receive new incoming messages.
 
-```Scala
+```scala
 def handleDelivery(message: IncomingMessage): Unit = {
   if (isAvailable(out)) {
     pushAndAckMessage(message)
@@ -134,7 +134,7 @@ It is important to isolate such stages on a separate dispatcher, preferably thre
 Selecting a separate dispatcher in Akka Streams is done by returning it from the `initialAttributes` of the `GraphStage`. (Note that this will isolate the `GraphStageLogic` into a separate actor when materializing and therefore introduce an input buffer to optimize passing the asynchronous boundary, read more
 in the docs: [Scala](http://doc.akka.io/docs/akka/2.4/scala/stream/stream-rate.html#Buffers_for_asynchronous_stages) and [Java](http://doc.akka.io/docs/akka/2.4/java/stream/stream-rate.html#Buffers_for_asynchronous_stages))
 
-```Scala
+```scala
 override protected def initialAttributes: Attributes = Attributes.name("AmsqpSink")
     .and(ActorAttributes.dispatcher("akka.stream.default-blocking-io-dispatcher"))
 ```
@@ -149,7 +149,7 @@ A more resource friendly variation of blocking polling is where you can provide 
 
 This can be implemented using the `TimedGraphStageLogic` which provides a facility for scheduling calls to a method which can then do the polling. In this sample we do exactly this to poll the WatchService for filesystem changes:
 
-```Java
+```java
 private void schedulePoll() {
   scheduleOnce("poll", pollInterval);
 }
@@ -170,7 +170,7 @@ public void onTimer(Object timerKey) {
 
 Let's combine two of these samples into a stream that will emit local log entries tailed from a textfile as they are written and push each line to an AMQP broker:
 
-```Java
+```java
 Path logfile = FileSystems.getDefault().getPath("/var/log/system.log");
 FileTailSource.create(logfile, 4096, 0, FiniteDuration.create(250, TimeUnit.MILLISECONDS))
   // stream individual lines as elements
