@@ -13,11 +13,11 @@ Writing an integration from ground up can be daunting and will be an expensive s
 Two of the samples are written Java and one in Scala but the `GraphStage` API does not differ much so just knowing one of the languages should be sufficient to understand all samples.
 
 ## Asynchronous callbacks
-Some libraries already have asynchronous APIs and allows a user to register a callback of some sort to react on data arriving or a write completing.
+Some libraries already have asynchronous APIs and allows a user to register a callback of some sort to react on data arriving or the completion of a write operation.
 
 Graph stages–very much like Actors–are maintaining the single threaded illusion, meaning that inside a `GraphStageLogic` instance we do not have to deal with concurrency primitives and can safely keep mutable state.
 
-When dealing with callbacks there is however one problem, we often do not have any control over what thread the callback is executed on, meaning that it is not safe to touch the internal state of the `GraphStageLogic`, we need to first get the message into the execution context of the stream. This is done by acquiring an instance of `AsyncCallback`. Calling `AsyncCallback.invoke` will safely trigger the internal graph stage logic it points to.
+When dealing with callbacks there is however one problem: we often do not have any control over what thread the callback is executed on. Which means that it is not safe to touch the internal state of the `GraphStageLogic`. We need to first get the message into the execution context of the stream. This is done by acquiring an instance of `AsyncCallback`. Calling `AsyncCallback.invoke` will safely trigger the internal graph stage logic it points to.
 
 ### FileTailSource
 This sample code is taken from the [FileTailSource](https://github.com/akka/akka-stream-contrib/blob/master/contrib/src/main/java/akka/stream/contrib/FileTailSource.java) sources of the [Akka Stream Contrib project](https://github.com/akka/akka-stream-contrib). In this case we are reading chunks of bytes from a file, but not stopping and completing the stream when we reach the end of the file. Instead we schedule a later read to see if data was appended to the file since the last read.
@@ -74,7 +74,7 @@ new CompletionHandler<Integer, AsyncCallback<Try<Integer>>>() {
 We have full control over when we trigger a read here. This will play nicely with backpressure and the stage will simply not read data when downstream is back pressuring.
 
 ## AMQPSource
-A more complex example of an asynchronous callback is the AMQP connector source, also in [Akka Stream Contrib ](https://github.com/akka/akka-stream-contrib), which uses the [RabbitMQ driver](https://www.rabbitmq.com/java-client.html) to connect to an AMQP capable message broker.
+A more complex example of an asynchronous callback is the AMQP connector source, also in [Akka Stream Contrib](https://github.com/akka/akka-stream-contrib), which uses the [RabbitMQ driver](https://www.rabbitmq.com/java-client.html) to connect to an AMQP capable message broker.
 
 The graph stage registers a listener which will be invoked when a message is available, and we use an `AsyncCallback` to make sure execution will be on the right thread:
 
@@ -84,7 +84,6 @@ val shutdownCallback = getAsyncCallback[Option[ShutdownSignalException]] {
   case Some(ex) => failStage(ex)
   case None     => completeStage()
 }
-
 
 val amqpSourceConsumer = new DefaultConsumer(channel) {
   override def handleDelivery(consumerTag: String, envelope: Envelope, properties: BasicProperties, body: Array[Byte]): Unit = {
