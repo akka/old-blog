@@ -27,3 +27,16 @@
     <script src="{{ site.baseurl }}/resources/javascript/highlight.pack.js" type="text/javascript"></script>
     <script>hljs.initHighlightingOnLoad();</script>    
     
+    <!-- include author box from akka team page -->
+    <script type="text/javascript">
+      function() {
+        var author = $(".news-author");
+        var authorName = author.text().substring(0, author.text().indexOf(" ")).replace("-- ", "");
+        
+        console.log("Loading author snippet from akka.io/team")
+        $(".news-author").load("http://akka.io/team .span6:contains('" + authorName + "')", function() {
+          $(".news-author .span6").removeClass("span6")
+        });
+      }();
+    </script>
+    
