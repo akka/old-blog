@@ -57,10 +57,15 @@ public class RandomNumberSource extends GraphStage<SourceShape<Integer>> {
 }
 
 // running it would be as simple as:
-ActorSystem system;
-Materializer mat;
 
-val runnable = Source.fromGraph(new RandomNumberSource).take(10).to(Sink.ignore)
+// infrastructure you'd only create once per application:
+final ActorSystem system = ActorSystem.create("StreamsExamples");
+final Materializer mat = ActorMaterializer.create(system);
+
+
+final Source<Integer> numbers = Source.fromGraph(new RandomNumberSource())
+
+final RunnableGraph<Object> to =numbers.take(10).to(Sink.ignore());
 
 // we can materialize the same stream multiple times:
 runnable.run(mat);
