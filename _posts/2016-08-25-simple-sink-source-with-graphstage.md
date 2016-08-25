@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "A gentle introduction to building Sinks and Sources using GraphStage APIs"
+title: "A gentle introduction to building Sinks and Sources using GraphStage APIs (Matering GraphStages II)"
 description: ""
 author: Konrad Malawski & Johan Andrén
 category: integrations
