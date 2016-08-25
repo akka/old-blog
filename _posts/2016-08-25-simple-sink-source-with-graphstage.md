@@ -162,13 +162,11 @@ In practice, of course, it would not be needed to implement a custom stage just 
 
 ```java
 final Sink<String, NotUsed> printlnSink =
-  Flow.of(String.class)
-    .zipWith(Source.unfold(1, i -> Optional.of(Pair.create(i + 1, i))), Keep.both())
-    .to(Sink.foreach(p -> {
-      final String element = p.first();
-      final int count = p.second();
-      System.out.println(String.format("[%s:%d] %s", prefix, count, element))
-    }));
+   Flow.of(String.class)
+     .zip(Source.range(1, Integer.MAX_VALUE))
+     .to(Sink.foreach(p -> 
+       System.out.println(String.format("[%s:%d] %s", prefix, (int) p.second(), p.first()))
+     ));
 ```
 
 ## Implement once, use everywhere
