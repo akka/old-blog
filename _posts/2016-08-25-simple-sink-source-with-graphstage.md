@@ -75,7 +75,7 @@ runnable.run(mat);
 // which would result in 3 streams running in parallel.
 ```
 
-[https://gist.github.com/johanandren/a5b9e4f88fc9fc6ce56dac10bb81a50e](https://gist.github.com/johanandren/a5b9e4f88fc9fc6ce56dac10bb81a50e)
+You can find the [complete source code](https://gist.github.com/johanandren/a5b9e4f88fc9fc6ce56dac10bb81a50e) here.
 
 In practice, one could implement such a simple random numbers source using the following one-liner using existing APIs:
 
