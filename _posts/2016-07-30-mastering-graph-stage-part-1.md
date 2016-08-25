@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Mastering GraphStages (part 1, introduction)"
+title: "Mastering GraphStages (part I, Introduction)"
 description: ""
 author: Endre Varga
 category: streams
