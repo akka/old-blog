@@ -63,9 +63,10 @@ final ActorSystem system = ActorSystem.create("StreamsExamples");
 final Materializer mat = ActorMaterializer.create(system);
 
 
-final Source<Integer> numbers = Source.fromGraph(new RandomNumberSource())
+final Source<Integer, NotUsed> numbers = Source.fromGraph(new RandomNumberSource())
+.mapMaterializedValue(o -> NotUsed.getInstance());
 
-final RunnableGraph<Object> to =numbers.take(10).to(Sink.ignore());
+final RunnableGraph<Object> runnable = numbers.take(10).to(Sink.ignore());
 
 // we can materialize the same stream multiple times:
 runnable.run(mat);
@@ -203,6 +204,6 @@ so regardless if you're using Java or Scala you always get a "native" feel from 
 
 
 
-So as you can see, creating custom Sinks and Sources is pretty simple - you don’t have to handle any back-pressure or demand juggling manually, the stages can be run fused together with other stages or executed as an asynchronous island without any additional work - Akka Streams handles all the hard parts of the Reactive Streams protocol without exposing you to it’s intricate rules and and requirements.
+So as you can see, creating custom Sinks and Sources is pretty simple - you don’t have to handle any back-pressure or demand juggling manually, the stages can be run fused together with other stages or executed as an asynchronous island without any additional work - Akka Streams handles all the hard parts of the Reactive Streams protocol without exposing you to it’s intricate rules and requirements.
 
 Happy hakking!
