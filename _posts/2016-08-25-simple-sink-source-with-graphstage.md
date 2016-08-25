@@ -161,9 +161,16 @@ final class PrintlnSink extends GraphStage<SinkShape<String>> {
 In practice, of course, it would not be needed to implement a custom stage just to do a println, it would look like this:
 
 ```java
+final Source<Long, NotUsed> numbers = 
+  Source.fromIterator(() -> new Iterator<Long>() {
+    private long counter = 0;
+    @Override public boolean hasNext() { return true; }
+    @Override public Long next() { return counter++; }
+  });
+
 final Sink<String, NotUsed> printlnSink =
    Flow.of(String.class)
-     .zip(Source.range(1, Integer.MAX_VALUE))
+     .zip(numbers)
      .to(Sink.foreach(p -> 
        System.out.println(String.format("[%s:%d] %s", prefix, (int) p.second(), p.first()))
      ));
