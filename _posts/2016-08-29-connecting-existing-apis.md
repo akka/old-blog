@@ -57,6 +57,7 @@ private void doPull() {
 [complete sources](https://github.com/akka/akka-stream-contrib/blob/master/contrib/src/main/java/akka/stream/contrib/FileTailSource.java#L116)
 
 Which will invoke either of the two methods on the `CompletionHandler` when the read operation completes:
+
 ```java
 new CompletionHandler<Integer, AsyncCallback<Try<Integer>>>() {
   @Override
