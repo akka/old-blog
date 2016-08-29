@@ -4,7 +4,7 @@ title: "Writing Akka Streams Connectors for existing APIs"
 description: ""
 author: Johan Andrén
 category: integrations
-tags: [streams,connectors,integration]
+tags: [streams,integration]
 ---
 {% include JB/setup %}
 
