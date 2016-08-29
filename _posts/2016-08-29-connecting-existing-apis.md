@@ -48,6 +48,7 @@ chunkCallback = createAsyncCallback((tryInteger) -> {
 We then use that callback in the `CompletionHandler` which is how the `java.nio` API will call us back. Note that there is an “attachment” passed as a parameter from the read to the callback and the actual consumer is stateless meaning that in this specific case we can keep a consumer singleton and share it between all instances of the `GraphStageLogic` without problems.
 
 We pass the callback and the completion handler to `read`:
+
 ```java
 private void doPull() {
   channel.read(buffer, position, chunkCallback, completionHandler);
