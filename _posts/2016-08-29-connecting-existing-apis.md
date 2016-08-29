@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Writing Akka Stream Connectors for existing APIs"
+title: "Writing Akka Streams Connectors for existing APIs"
 description: ""
 author: Johan Andrén
 category: integrations
