@@ -75,7 +75,7 @@ new CompletionHandler<Integer, AsyncCallback<Try<Integer>>>() {
 
 We have full control over when we trigger a read here. This will play nicely with backpressure and the stage will simply not read data when downstream is back pressuring.
 
-## AMQPSource
+### AMQPSource
 A more complex example of an asynchronous callback is the AMQP connector source, also in [Akka Stream Contrib](https://github.com/akka/akka-stream-contrib), which uses the [RabbitMQ driver](https://www.rabbitmq.com/java-client.html) to connect to an AMQP capable message broker.
 
 The graph stage registers a listener which will be invoked when a message is available, and we use an `AsyncCallback` to make sure execution will be on the right thread:
