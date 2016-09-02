@@ -2,7 +2,7 @@
 layout: post
 title: "Akka Community Survey 2016"
 description: ""
-author: Markus Eisele
+author: Markus Eisele & Konrad Malawski
 category: community
 tags: [community,contributing,akka,survey]
 ---
@@ -10,17 +10,23 @@ tags: [community,contributing,akka,survey]
 
 Dear hakkers,
 
-we did a lot this year already. Everything started with revamping this team blog. We want to share more technical details with you and introduce you to the latest happenings. We also started to recognize our most active contributors by giving out special t-shirts. But this shouldn't be the last thing we do this year. Today, we're announcing the "Akka Community Survey 2017".
+we did a lot this year already. We merged Akka Streams and HTTP into the 2.4 series of Akka, pushed 16 releases of Akka itself, and maintained the various Persistence plugins. We also reached out to create even more community collaboration with projects related to Kafka, and now are eagerly awaiting codename Alpakka (the various Akka Streams connectors to many different technologies) to take shape and form - all driven by you, the community. We also started this blog, as we wanted to get more in touch with you, on a different level than though raw documentation of Akka–we want to have an ongoing conversation with you. 
 
-To further foster the adoption of Akka we want to make sure to give you, our community, a voice. We compiled a list of questions which will help us to identify missing bits and pieces but also understand better how you are using Akka.
+We want to share more technical details with you and introduce you to the latest happenings. We also started to recognize our most active members of our community by giving out special "happy hakking" t-shirts are unique and you can't get them anyway else other than becoming a valuable part of our Akka community. These were actually a surprise to many of our contributors, and also, for us, a way to say _thanks_ for all the amazing work these contributors and community as a whole have been doing. But this shouldn't be the last thing we do this year–in fact, we're only getting started. 
 
-It asks about module ussage, your favorite language for Akka, areas of improvements and will take you probably just short 10 minutes. We keep it open for a week (until September 8th, 2016) and hope for plenty of responses. So make sure to:
 
-*[Take the survey today!](https://lightbend.qualtrics.com/SE/?SID=SV_3VnWxXR09f7lAEd)*
+Today, we'd like to announce the "Akka Community Survey 2016"! Its goal is, to make sure to give you, our community, a voice. 
+Of course we're always on-line and listening to your feedback on the various mailing lists, chats and twitter, however the form of a survey should help us to set direction and see what your thoughts are in a more structured fashion. We compiled a list of questions which will help us to identify missing bits and pieces but also understand better how you are using Akka.
 
-As a little motivation, we're raffling away 100 Akka t-shirts. Every response who enters the raffle has a chance to win one. The only prerequisite is, that you give us your email address at the end of the survey. But you decide: You can take this anonymous survey without entering the drawing.
+It asks about module usage, your favorite language for Akka, areas of improvements and will take you probably just a short 5 or 10 minutes. We keep it open for a 2 weeks (until September 16th, 2016), and hope to be able to provide you with a nice summary of the results after that.
+
+So, if you have some time to spare and would like to have an impact of Akka's future: *[take the Akka Community Survey 2016](https://lightbend.qualtrics.com/SE/?SID=SV_3VnWxXR09f7lAEd)*.
+
+Aditionally, as a little motivation, we'll be raffling away **100 Akka t-shirts** among the respondents of the survey. Every response who enters the raffle has a chance to win one. The only prerequisite is,   that you give us your email address at the end of the survey. You can take this survey anonymously if you don't want to participate in the raffle.
 Winners will be notified within two weeks after we closed the survey.
 
 ![Win an Akka T-Shirt]({{ site.url }}/assets/akka-shirt.png)
 
-Now, [take the survey today](https://lightbend.qualtrics.com/SE/?SID=SV_3VnWxXR09f7lAEd), spread the word on your social media channels and help get plenty of responses for your Akka Team!
+We're looking forward to your responses. So [take the survey](https://lightbend.qualtrics.com/SE/?SID=SV_3VnWxXR09f7lAEd), and spread the word!
+
+*happy hakking!*
