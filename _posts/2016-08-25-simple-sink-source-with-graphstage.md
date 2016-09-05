@@ -1,9 +1,11 @@
 ---
-layout: post
+layout: series_post
 title: "A gentle introduction to building Sinks and Sources using GraphStage APIs (Mastering GraphStages, Part II)"
 description: ""
 author: Konrad Malawski & Johan Andrén
 category: integrations
+series_title: Integration
+series_tag: integration
 tags: [streams,integration]
 ---
 {% include JB/setup %}
@@ -18,12 +20,12 @@ A `GraphStage` consists of a number of key elements. Firstly there is the wrappe
 
 As you know, Akka Streams have a materialization step which takes the stream's reusable blueprint and allocates all the resources needed to execute it, to then start the flow of data through it. This means that our GraphStage is actually a factory of the actual `GraphStageLogic` instances. Such logic instance will be created per-materialization (per-instance) and is allowed to keep mutable state inside it. For example if we want to keep a counter or something else for the stream, we would keep it inside the `GraphStageLogic`, not inside the `GraphStage` which is a shared object between all the materializations of a stream. Accessing mutable state within the logic is also *safe* (!) from any of the GraphStage callbacks (`onPush`, `onPull` and more) - so you can think of a `GraphStageLogic` behaving exacly like an Actor. Even though it may be executing on multiple threads, it preserves the single-threaded illusion you know well from Actors. We found this property to be invaluable while implementing stages - the amount of complexity you're guarded from by this single property is simply amazing (esp. if you'd compare with a Reactive Streams implementation which would tell you to just deal with re-entrancy and races on your own).
 
-To create a custom `Source` we define a GraphStage with a `SourceShape`. This is a special shape that will make it possible to use our stage in all places where a `Source` is expected–or, to be more precise where a `Graph<SourceShape<T>>` is expected. 
+To create a custom `Source` we define a GraphStage with a `SourceShape`. This is a special shape that will make it possible to use our stage in all places where a `Source` is expected–or, to be more precise where a `Graph<SourceShape<T>>` is expected.
 
 Next we install Handlers for each of the ports. In our case it onlywe only have one `Outlet`, so we set an `AbstractOutHandler` to handle all of the interactions of this port. Instead of thinking about raw demand management as the raw Reactive Streams protocol does, the model here is simplified to just Push and Pull events. Akka Streams will automatically manage the buffers and request multiple elements in batches in accordance to your buffer filling-up / becoming empty again. This vastly simplifies what we have to do in order to implement our simple source: We simply will get an `onPull` signal from our downstream once it is  is ready for to receive element - so then we generate a random number and `push` it into the `out` outlet. Note that all these APIs are well-typed. You can't push a wrongly typed element into the `out` outlet.
 
 We'll implement the below stages in `Java`, to show that the API is pretty nice and does not require special Scala features.
-In Scala a few more tricks can be applied, for example the `GraphStageLogic` can directly mix-in the `OutHandler` trait, 
+In Scala a few more tricks can be applied, for example the `GraphStageLogic` can directly mix-in the `OutHandler` trait,
 however the API remains largely the same (it is the same class after-all).
 
 ```java
@@ -31,7 +33,7 @@ public class RandomNumberSource extends GraphStage<SourceShape<Integer>> {
 
   public final Outlet<Integer> out = Outlet.create("RandomNumberSource.out");
   private final SourceShape<Integer> shape = SourceShape.of(out);
-  
+
   @Override
   public SourceShape<Integer> shape() {
     return shape;
@@ -81,7 +83,7 @@ You can find the [complete source code](https://gist.github.com/johanandren/a5b9
 In practice, one could implement such a simple random numbers source using the following one-liner using existing APIs:
 
 ```java
-  final Source<Integer, NotUsed> randomNumbers = 
+  final Source<Integer, NotUsed> randomNumbers =
     Source.repeat("not-used")
       .map(n -> ThreadLocalRandom.current().nextInt());
 ```
@@ -119,7 +121,7 @@ final class PrintlnSink extends GraphStage<SinkShape<String>> {
       // a new GraphStageLogic will be created each time we materialize the sink
 
       // so all state that we want to keep for the stage should be within the logic.
-      // 
+      //
       // here we maintain a counter of how many messages we printed:
       private long count = 0;
 
@@ -129,23 +131,23 @@ final class PrintlnSink extends GraphStage<SinkShape<String>> {
           public void onPush() {
             // We grab the element from the input port.
             // Notice that it is properly typed as a String.
-            // 
-            // Another reason we explicitly `grab` elements that sometimes one is not 
+            //
+            // Another reason we explicitly `grab` elements that sometimes one is not
             // immediately ready to consume an input and this is basically a buffer space of one for free.
             final String element = grab(in);
-            
-            // Since the GraphStage maintains the Actor-like single-threaded illusion we can safely mutate 
+
+            // Since the GraphStage maintains the Actor-like single-threaded illusion we can safely mutate
             // our internal counter, even though the stage could be running on different threads.
             count += 1;
-            
+
             // We print our message:
             System.out.println(String.format("[%s:%d] %s", prefix, count, element));
-            
+
             // And signal that we'd like to receive more elements from the `in` port by pulling it:
             pull(in);
 
             // It is important to not pull a port "twice", that would lead to bugs so Akka Streams
-            // prevents you from making this mistake and would throw 
+            // prevents you from making this mistake and would throw
           }
         });
       }
@@ -162,7 +164,7 @@ final class PrintlnSink extends GraphStage<SinkShape<String>> {
 In practice, of course, it would not be needed to implement a custom stage just to do a println, it would look like this:
 
 ```java
-final Source<Long, NotUsed> numbers = 
+final Source<Long, NotUsed> numbers =
   Source.fromIterator(() -> new Iterator<Long>() {
     private long counter = 0;
     @Override public boolean hasNext() { return true; }
@@ -172,7 +174,7 @@ final Source<Long, NotUsed> numbers =
 final Sink<String, NotUsed> printlnSink =
    Flow.of(String.class)
      .zip(numbers)
-     .to(Sink.foreach(p -> 
+     .to(Sink.foreach(p ->
        System.out.println(String.format("[%s:%d] %s", prefix, (int) p.second(), p.first()))
      ));
 ```
@@ -182,11 +184,11 @@ final Sink<String, NotUsed> printlnSink =
 An interesting side note here on the availability and compatibility of Java and Scala DSLs for Akka Streams.
 As you know, the actual types of the DSL exist respectively in the `akka.stream.javadsl` and `akka.stream.scaladsl` packages.
 
-You may have noticed that all of the Akka Stream's operators accept arguments in of types such as `akka.stream.Graph<SourceShape<T>, Mat>` or `akka.stream.Graph<FlowShape<A, B>, Mat>`, the exact reason it is like that is in order to allow custom stages to feel *native* as-if they were a built-in `Source` of `Flow` themselves. 
+You may have noticed that all of the Akka Stream's operators accept arguments in of types such as `akka.stream.Graph<SourceShape<T>, Mat>` or `akka.stream.Graph<FlowShape<A, B>, Mat>`, the exact reason it is like that is in order to allow custom stages to feel *native* as-if they were a built-in `Source` of `Flow` themselves.
 
 Does this mean each custom operation has to be implemented twice? The answer is: No!
 
-The APIs are designed such, that if you implement a `GraphStage` of a given shape it can be used in both DSLs. 
+The APIs are designed such, that if you implement a `GraphStage` of a given shape it can be used in both DSLs.
 For example, the above examples were implemented in Java, but they can seamlessly be used by Scala APIs.
 The opposite is true as well - a stage implemented in Scala can seamlessly be used by Java users:
 

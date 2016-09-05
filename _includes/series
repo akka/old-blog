@@ -1,0 +1,11 @@
+<ol>
+    {% for p in series_posts %}
+        {% if p.url == page.url %}
+            <li class="active">{{p.weight}}  → {{p.title}}</li>
+        {% else %}
+            <li>
+                <a href="{{p.url | prepend: site.baseurl}}">{{p.weight}}  {{p.title}}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ol>
