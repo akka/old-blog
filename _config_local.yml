@@ -1,0 +1,7 @@
+title: "Akka Blog"
+
+baseurl: ""
+
+markdown: kramdown
+
+exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]

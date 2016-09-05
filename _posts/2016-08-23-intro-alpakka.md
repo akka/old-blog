@@ -1,15 +1,17 @@
 ---
-layout: post
+layout: series_post
 title: "Akka Streams Integration, codename Alpakka"
 description: ""
 author: Patrik Nordwall
 category: integrations
+series_title: Integration
+series_tag: integration
 tags: [streams,integration]
 ---
 {% include JB/setup %}
 
 
-We believe that Akka Streams can be the tool for building a modern alternative to [Apache Camel](http://camel.apache.org/). That will not happen by itself overnight and this is a call for arms for the community to join us on this mission. The biggest asset of Camel is its rich set of [endpoint components](https://camel.apache.org/components.html). We would like to see that similar endpoints are developed for Akka Streams. Our goal is to build a strong and healthy community around such integrations. We've already seen quite some up-take in the community, including connectors to S3, Kafka and more. Akka Streams are built around the core concept of being simple to extend using the powerful yet simple to use APIs. Added components can be used together with all other great things in Akka Streams, such as easy transformation and manipulation of the data stream. 
+We believe that Akka Streams can be the tool for building a modern alternative to [Apache Camel](http://camel.apache.org/). That will not happen by itself overnight and this is a call for arms for the community to join us on this mission. The biggest asset of Camel is its rich set of [endpoint components](https://camel.apache.org/components.html). We would like to see that similar endpoints are developed for Akka Streams. Our goal is to build a strong and healthy community around such integrations. We've already seen quite some up-take in the community, including connectors to S3, Kafka and more. Akka Streams are built around the core concept of being simple to extend using the powerful yet simple to use APIs. Added components can be used together with all other great things in Akka Streams, such as easy transformation and manipulation of the data stream.
 
 Don't hesitate to get involved!
 
@@ -35,7 +37,7 @@ Using Akka Streams and the currently available connectors, an [ETL](https://en.w
       FileIO.fromPath(Paths.get("/tmp", "wiki"))
         .via(parseWikiEntries());
 
-    // Enrich the data by fetching matching image from a 
+    // Enrich the data by fetching matching image from a
     // web service with HTTP
     Source<RichWikipediaEntry, CompletionStage<IOResult>> enrichedData =
       wikipediaEntries
@@ -62,7 +64,7 @@ In the above example we use [Akka Http](http://doc.akka.io/docs/akka/2.4/java/ht
 
           return http.singleRequest(request, mat)
             .thenCompose(response -> {
-                final CompletionStage<HttpEntity.Strict> entity = 
+                final CompletionStage<HttpEntity.Strict> entity =
                   response.entity().toStrict(1000, materializer);
                 return entity.thenApply(e -> new RichWikipediaEntry(w, e.getData()));
               }
@@ -73,15 +75,13 @@ In the above example we use [Akka Http](http://doc.akka.io/docs/akka/2.4/java/ht
 We use [Akka Stream Kafka](https://github.com/akka/reactive-kafka) to publish the content to a Kafka topic:
 
 ```Java
-    Sink<RichWikipediaEntry, NotUsed> kafkaTopic = 
+    Sink<RichWikipediaEntry, NotUsed> kafkaTopic =
       Flow.of(RichWikipediaEntry.class)
         .map(entry -> entry.wikipediaEntry().content())
         .map(elem -> new ProducerRecord("contents", elem))
         .to(Producer.plainSink(producerSettings));
 ```
 
-The Github repository to use for contributing your favorite integration component is [akka-stream-contrib](https://github.com/akka/akka-stream-contrib). Please create issues and pull requests for discussion and proposals. Take a look at the list of [Camel components](https://camel.apache.org/components.html) for inspiration. Implementations in Java or Scala are welcome. 
+The Github repository to use for contributing your favorite integration component is [akka-stream-contrib](https://github.com/akka/akka-stream-contrib). Please create issues and pull requests for discussion and proposals. Take a look at the list of [Camel components](https://camel.apache.org/components.html) for inspiration. Implementations in Java or Scala are welcome.
 
 This will be great fun, we are looking forward to your contributions!
-
-

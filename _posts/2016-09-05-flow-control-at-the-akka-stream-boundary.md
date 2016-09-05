@@ -1,9 +1,11 @@
 ---
-layout: post
+layout: series_post
 title: "Flow control at the boundary of Akka Streams and a data provider"
 description: ""
 author: Martynas Mickevičius
 category: integrations
+series_title: Integration
+series_tag: integration
 tags: [streams,connectors,integration]
 ---
 {% include JB/setup %}

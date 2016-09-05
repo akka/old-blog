@@ -1,9 +1,11 @@
 ---
-layout: post
+layout: series_post
 title: "Writing Akka Streams Connectors for existing APIs"
 description: ""
 author: Johan Andrén
 category: integrations
+series_title: Integration
+series_tag: integration
 tags: [streams,integration]
 ---
 {% include JB/setup %}
