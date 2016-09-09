@@ -40,6 +40,8 @@ result.onFailure {
 }
 ```
 
+More examples in Java and Scala, with explanations, can be found in the [documentation](http://doc.akka.io/docs/akka-stream-kafka/current/home.html).
+
 Secondly, there are significant performance improvements. We’ve done some benchmarks, and while there is still some overhead from the reactive-kafka wrapper (though keep in mind, that you also get something in return: e.g. all of the benefits coming from backpressure!), the overall numbers look very good and are getting better.
 
 Here’s a couple of common Kafka usage scenarios, comparing the old reactive-kafka version (M4), the current version (0.11), and equivalent functionality implemented using plain Kafka `Producer`s/`Consumer`s (but not taking into account, of course, connecting with any other reactive components).
