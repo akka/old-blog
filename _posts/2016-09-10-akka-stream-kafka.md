@@ -42,7 +42,7 @@ result.onFailure {
 
 More examples in Java and Scala, with explanations, can be found in the [documentation](http://doc.akka.io/docs/akka-stream-kafka/current/home.html).
 
-Secondly, there are significant performance improvements. We’ve done some benchmarks, and while there is still some overhead from the reactive-kafka wrapper (though keep in mind, that you also get something in return: e.g. all of the benefits coming from backpressure!), the overall numbers look very good and are getting better.
+Secondly, there are significant performance improvements. We’ve done some benchmarks, and while there is still some overhead from the reactive-kafka wrapper (though keep in mind, that you also get something in return: e.g. all of the benefits coming from a nice API with asynchronous backpressure!), the overall numbers look very good and are getting better.
 
 Here’s a couple of common Kafka usage scenarios, comparing the old reactive-kafka version (M4), the current version (0.11), and equivalent functionality implemented using plain Kafka `Producer`s/`Consumer`s (but not taking into account, of course, connecting with any other reactive components).
 
@@ -56,7 +56,7 @@ Another scenario represents a very common use case - consuming messages and comm
 
 ![At most once consumer]({{ site.url }}/assets/kafka-bench3.png)
 
-Sometimes one needs to commit each single message before processing, which gives at most once delivery guarantee. 0.11 optimizations fixed the super-slow value of 20 msgs/s and reached over 2800 msgs/s. This is a great step forward, very close to the simple while loop scenario (“at-most-once”).
+Sometimes one needs to commit each single message before processing, which gives at most once delivery guarantee. 0.11 optimizations fixed the super-slow value of 20 msgs/s in the previous implementation, and reached over 2800 msgs/s. This is a great step forward, very close to the simple while loop scenario (“at-most-once”).
 
 ![Producer]({{ site.url }}/assets/kafka-bench4.png)
 
