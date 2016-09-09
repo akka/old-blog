@@ -2,7 +2,7 @@
 layout: series_post
 title: "Akka Streams Kafka 0.11"
 description: ""
-author: Adam Warski
+author: Adam Warski & Krzysiek Ciesielski
 category: integrations
 series_title: Integration
 series_tag: integration
