@@ -1,9 +1,11 @@
 ---
-layout: post
+layout: series_post
 title: "Custom Flows: Parsing XML (part I)"
 description: ""
 author: Endre Varga
 category: integrations
+series_title: Integration
+series_tag: integration
 tags: [streams,integration]
 ---
 {% include JB/setup %}
@@ -79,6 +81,7 @@ private val parser: AsyncXMLStreamReader[AsyncByteArrayFeeder] =
 ```
 
 Now we have a parser, all we need to figure out is how to feed it and read from it. This is very simple actually:
+
  * To check if there are available events to read, we can call `parser.hasNext`.
  * To read the actual event, we can call `parser.next()` which will return us an event code (one of `javax.xml.stream.XMLStreamConstants`). If this is an actual event, we can get the details of the event using the various getter methods on the parser. There is an extra event in addition to the ordinary Java XML pull parser world: `AsyncXMLStreamReader.EVENT_INCOMPLETE` which signals us that there are no events available and we need to feed the parser with more bytes.
  * To feed the parser with new data, we need to call `parser.getInputFeeder.feedInput()` with an array of bytes
