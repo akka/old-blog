@@ -1,5 +1,5 @@
 ---
-layout: series
+layout: series_post
 title: "Custom Flows: Parsing XML (part II)"
 description: ""
 author: Endre Varga
