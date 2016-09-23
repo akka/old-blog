@@ -4,6 +4,8 @@ title: "Custom Flows: Parsing XML (part II)"
 description: ""
 author: Endre Varga
 category: integrations
+series_title: Integration
+series_tag: integration
 tags: [streams,integration]
 ---
 {% include JB/setup %}
