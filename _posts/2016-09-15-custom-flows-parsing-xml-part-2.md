@@ -8,7 +8,7 @@ tags: [streams,integration]
 ---
 {% include JB/setup %}
 
-In part I (link TODO) we have built an XML parser that reads from a streamed data source and emits streamed XML parsing events as its output. This is a bit low level though to be directly usable, so in this post we will build two helper stages that illustrate how these events can be transformed (and also exercise our custom `Flow` skills along the way).
+In [part I](http://blog.akka.io/integrations/2016/09/16/custom-flows-parsing-xml-part-1) we have built an XML parser that reads from a streamed data source and emits streamed XML parsing events as its output. This is a bit low level though to be directly usable, so in this post we will build two helper stages that illustrate how these events can be transformed (and also exercise our custom `Flow` skills along the way).
 
 (The full sources of stages that we build in this post are available [here](https://github.com/akka/akka-stream-contrib/blob/master/xmlparser/src/main/scala/com/drewhk/stream/xml/Xml.scala). They are also
 part of the [akka-stream-contrib](https://github.com/akka/akka-stream-contrib) project if you just want to use them immediately.)
