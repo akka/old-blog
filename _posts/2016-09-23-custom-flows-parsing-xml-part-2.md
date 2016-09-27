@@ -51,7 +51,7 @@ new GraphStageLogic(shape) with InHandler with OutHandler {
        val coalesced = buffer.toString()
        isBuffering = false
        buffer.clear()
-       emitMultiple(out, Iterable(Characters(coalesced), other))
+       emitMultiple(out, List(Characters(coalesced), other))
      } else {
        push(out, other)
      }
@@ -74,7 +74,7 @@ Are we done yet? No, we haven’t considered completion events from our upstream
 We need to do two modifications, first, fixing our emit chain:
 
 ```scala
-emitMultiple(out, Iterable(Characters(coalesced), other), () => if (isClosed(in)) completeStage())
+emitMultiple(out, List(Characters(coalesced), other), () => if (isClosed(in)) completeStage())
 ```
 
 Then, we need to add a completion handler for upstream:
