@@ -51,7 +51,7 @@ new GraphStageLogic(shape) with InHandler with OutHandler {
        val coalesced = buffer.toString()
        isBuffering = false
        buffer.clear()
-       emit(out, Characters(coalesced), () => emit(out, other))
+       emitMultiple(out, Iterable(Characters(coalesced), other))
      } else {
        push(out, other)
      }
@@ -61,24 +61,20 @@ new GraphStageLogic(shape) with InHandler with OutHandler {
 }
 ```
 
-We employed one useful trick in the logic: instead of encoding the states where we first emit a coalesced event then a non-text event directly, we use the helper method `emit()` which calls an optional callback once the element has been successfully emitted (it installs a temporary `onPull` handler if necessary). We chain two `emit()` calls to push down the two events in sequence without handling to deal with `onPull` events directly and driving a state-machine ourselves.
+We employed one useful trick in the logic: instead of encoding the states where we first emit a coalesced event then a non-text event directly, we use the helper method `emitMultiple()` which calls an optional callback once the elements have been successfully emitted (it installs a temporary `onPull` handler if necessary), in the case where we only have a single event the `emit()` helper can be used instead.
 
 Are we done yet? No, we haven’t considered completion events from our upstream and downstream. Let’s enumerate the possible close events we can get:
 
 * `onDownstreamFinish`: since the downstream is no longer interested in elements, we should just shut down, which is thankfully the default.
 * `onUpstreamFailure`: our stream is broken and we cannot do anything other than to propagate the failure, which is again the default.
 * `onUpstreamFinish`: the default would be to complete ourselves, but this is not always correct. There are two states where this leads to problems, `EmitTwoEvents` and `Buffering`:
-  * `EmitTwoEvents`: `emit()` automatically ignores the completion event while the emitchain state machine is not yet finished, so this if fine. However, after the emit state machine finishes, we should check that the upstream has completed and complete ourselves.
+  * `EmitTwoEvents`: `emitMultiple()` automatically ignores the completion event while the emitchain state machine is not yet finished, so this if fine. However, after the emit state machine finishes, we should check that the upstream has completed and complete ourselves.
   * `Buffering`: we have still one buffered event that we tried to coalesce. We should emit this last event before completing ourself.
 
 We need to do two modifications, first, fixing our emit chain:
 
 ```scala
-emit(out, Characters(coalesced),
-  () => emit(out, other,
-    () => if (isClosed(in)) completeStage()
-  )
-)
+emitMultiple(out, Iterable(Characters(coalesced), other), () => if (isClosed(in)) completeStage())
 ```
 
 Then, we need to add a completion handler for upstream:
@@ -274,7 +270,7 @@ This was quite a lot, and it is not expected that you understand everything at o
 
 1. Sketch out the duty cycle of a stage, i.e. a full cycle through it states until it hits its initial state again.
 2. Identify the main states (that group together steps from the duty-cycle) in which your stage can be. 
-3. Try to implement the logic that is derived from above. Eliminate trivial states by the use of emit() if possible.
+3. Try to implement the logic that is derived from above. Eliminate trivial states by the use of emit() or emitMultiple() if possible.
 4. Think about completion events (upstream and downstream) and what they mean in the context of each state you mapped out. Introduce new states or use emit() if necessary for a correct shutdown.
 5. Double-check that all failure conditions are properly handled where possible (otherwise stick to the defaults).
 6. If you use any kind of buffering in the stage double-check that it can never go arbitrarily large (unless you explicitly desire so). This means to check all call sites where anything is added to your container/buffer. Introduce an explicit capacity parameter to the stage if needed.
