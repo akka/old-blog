@@ -14,18 +14,18 @@ When working with Akka Streams, one can be assured that all of the data is going
 
 Below are three strategies of doing that. Choosing one over another relies on what APIs the library provides and what guarantees the API of the library hold.
 
-*Code examples below are in Scala as [AMQP](https://github.com/akka/akka-stream-contrib/tree/master/amqp) and [MQTT](https://github.com/akka/akka-stream-contrib/tree/master/mqtt) connectors in [akka-stream-contrib](https://github.com/akka/akka-stream-contrib) project are written in Scala. However the GraphStage API is fairly similar for Java so it should be easy to follow even if you do not know Scala.*
+*Code examples below are in Scala as [AMQP](https://github.com/akka/alpakka/tree/master/amqp) and [MQTT](https://github.com/akka/alpakka/tree/master/mqtt) connectors in [Alpakka](https://github.com/akka/alpakka) project are written in Scala. However the GraphStage API is fairly similar for Java so it should be easy to follow even if you do not know Scala.*
 
 ## Requesting number of elements
 
 A straightforward approach is to signal explicitly how many elements an Akka Streams connector is able to receive. When a connector takes this approach, an internal buffer is needed which is going to store this limited number of elements requested from the library.
 
-This approach was taken when writing the [AMQP connector](https://github.com/akka/akka-stream-contrib/tree/master/amqp) using the [RabbitMQ client library](https://www.rabbitmq.com/java-client.html). While the library does not have an explicit way of signaling how many elements are to be expected, it allows setting an [unacknowledged message limit](https://www.rabbitmq.com/consumer-prefetch.html).
+This approach was taken when writing the [AMQP connector](https://github.com/akka/alpakka/tree/master/amqp) using the [RabbitMQ client library](https://www.rabbitmq.com/java-client.html). While the library does not have an explicit way of signaling how many elements are to be expected, it allows setting an [unacknowledged message limit](https://www.rabbitmq.com/consumer-prefetch.html).
 
 ```scala
 channel.basicQos(bufferSize, true)
 ```
-[complete sources](https://github.com/akka/akka-stream-contrib/blob/aeac7b25c40dbcfbba9fb1efb40a8c1b349de785/amqp/src/main/scala/akka/stream/contrib/amqp/AmqpSource.scala#L60)
+[complete sources](https://github.com/akka/alpakka/blob/c1315a8d1979b4399b62db726c159d64149501f7/amqp/src/main/scala/akka/stream/alpakka/amqp/AmqpSourceStage.scala#L47)
 
 The unacknowledged messages limit combined with acknowledging messages that are sent downstream, ensures that there is not going to be more than a given number of messages in flight between the library and the connector.
 
@@ -44,7 +44,7 @@ def pushAndAckMessage(message: IncomingMessage): Unit = {
   channel.basicAck(message.envelope.getDeliveryTag, false)
 }
 ```
-[complete sources](https://github.com/akka/akka-stream-contrib/blob/aeac7b25c40dbcfbba9fb1efb40a8c1b349de785/amqp/src/main/scala/akka/stream/contrib/amqp/AmqpSource.scala#L135)
+[complete sources](https://github.com/akka/alpakka/blob/c1315a8d1979b4399b62db726c159d64149501f7/amqp/src/main/scala/akka/stream/alpakka/amqp/AmqpSourceStage.scala#L112)
 
 Here messages are acknowledged one-by-one as they are sent downstream. A more performant alternative would be to acknowledge messages in batches. A tradeoff of this approach would be that on a stream failure a maximum of acknowledgement batch size messages could remain unacknowledged, even if they were already taken from the queue.
 
@@ -52,7 +52,7 @@ Here messages are acknowledged one-by-one as they are sent downstream. A more pe
 
 When a library provides a way to subscribe for data via callback execution, it might be the case that it guarantees that callbacks are executed sequentially and the library relies on the callee to block its thread to signal backpressure. This allows us to block the calling thread and in such way to signal the library that the flow of the elements should be paused for some time.
 
-After consulting the documentation of the external library and making sure that it expects its thread to be blocked, we took this strategy when implementing the Akka Streams connector for [MQTT](https://github.com/akka/akka-stream-contrib/tree/master/mqtt) using the [PAHO client library](https://eclipse.org/paho/clients/java/). The documentation of the [`messageArrived`](http://www.eclipse.org/paho/files/javadoc/org/eclipse/paho/client/mqttv3/MqttCallback.html#messageArrived-java.lang.String-org.eclipse.paho.client.mqttv3.MqttMessage-) method, that is called when new message arrives, states the following:
+After consulting the documentation of the external library and making sure that it expects its thread to be blocked, we took this strategy when implementing the Akka Streams connector for [MQTT](https://github.com/akka/alpakka/tree/master/mqtt) using the [PAHO client library](https://eclipse.org/paho/clients/java/). The documentation of the [`messageArrived`](http://www.eclipse.org/paho/files/javadoc/org/eclipse/paho/client/mqttv3/MqttCallback.html#messageArrived-java.lang.String-org.eclipse.paho.client.mqttv3.MqttMessage-) method, that is called when new message arrives, states the following:
 
 > Any additional messages which arrive while an implementation of this method is running, will build up in memory, and will then back up on the network.
 
@@ -75,7 +75,7 @@ final override def preStart(): Unit = {
   }
 }
 ```
-[complete sources](https://github.com/akka/akka-stream-contrib/blob/aeac7b25c40dbcfbba9fb1efb40a8c1b349de785/mqtt/src/main/scala/Mqtt.scala#L39)
+[complete sources](https://github.com/akka/alpakka/blob/c1315a8d1979b4399b62db726c159d64149501f7/mqtt/src/main/scala/akka/stream/alpakka/mqtt/Mqtt.scala#L112)
 
 This allows us to block in the implementation of `beforeHandleMessage` and protects us against uncontrolled message overflow.
 
@@ -84,7 +84,7 @@ override def beforeHandleMessage(): Unit = {
   backpressure.acquire()
 }
 ```
-[complete sources](https://github.com/akka/akka-stream-contrib/blob/aeac7b25c40dbcfbba9fb1efb40a8c1b349de785/mqtt/src/main/scala/MqttSource.scala#L68)
+[complete sources](https://github.com/akka/alpakka/blob/c1315a8d1979b4399b62db726c159d64149501f7/mqtt/src/main/scala/akka/stream/alpakka/mqtt/MqttSourceStage.scala#L51)
 
 On every arrived message we take a permit from a semaphore which was initialized to have the same number of permits as is the size of the internal buffer. When we run out of permits, library thread is going to be blocked on this line, backpressuring all of the incoming message flow.
 
@@ -100,7 +100,7 @@ setHandler(out, new OutHandler {
   }
 })
 ```
-[complete sources](https://github.com/akka/akka-stream-contrib/blob/aeac7b25c40dbcfbba9fb1efb40a8c1b349de785/mqtt/src/main/scala/MqttSource.scala#L54)
+[complete sources](https://github.com/akka/alpakka/blob/c1315a8d1979b4399b62db726c159d64149501f7/mqtt/src/main/scala/akka/stream/alpakka/mqtt/MqttSourceStage.scala#L38)
 
 This signals to the blocked library thread (if any) that there is now space in the internal buffer and it can continue delivering messages.
 

@@ -82,6 +82,6 @@ We use [Akka Stream Kafka](https://github.com/akka/reactive-kafka) to publish th
         .to(Producer.plainSink(producerSettings));
 ```
 
-The Github repository to use for contributing your favorite integration component is [akka-stream-contrib](https://github.com/akka/akka-stream-contrib). Please create issues and pull requests for discussion and proposals. Take a look at the list of [Camel components](https://camel.apache.org/components.html) for inspiration. Implementations in Java or Scala are welcome.
+The Github repository to use for contributing your favorite integration component is [Alpakka](https://github.com/akka/alpakka). Please create issues and pull requests for discussion and proposals. Take a look at the list of [Camel components](https://camel.apache.org/components.html) for inspiration. Implementations in Java or Scala are welcome.
 
 This will be great fun, we are looking forward to your contributions!
