@@ -22,7 +22,7 @@ Graph stages–very much like Actors–are maintaining the single threaded illus
 When dealing with callbacks there is however one problem: we often do not have any control over what thread the callback is executed on. Which means that it is not safe to touch the internal state of the `GraphStageLogic`. We need to first get the message into the execution context of the stream. This is done by acquiring an instance of `AsyncCallback`. Calling `AsyncCallback.invoke` will safely trigger the internal graph stage logic it points to.
 
 ### FileTailSource
-This sample code is taken from the [FileTailSource](https://github.com/akka/akka-stream-contrib/blob/master/contrib/src/main/java/akka/stream/contrib/FileTailSource.java) sources of the [Akka Stream Contrib project](https://github.com/akka/akka-stream-contrib). In this case we are reading chunks of bytes from a file, but not stopping and completing the stream when we reach the end of the file. Instead we schedule a later read to see if data was appended to the file since the last read.
+This sample code is taken from the [FileTailSource](https://github.com/akka/alpakka/blob/ae2e1e1d44d627ebc66a24ea35993398df7840bc/file/src/main/java/akka/stream/alpakka/file/javadsl/FileTailSource.java) sources of the [Alpakka project](https://github.com/akka/alpakka). In this case we are reading chunks of bytes from a file, but not stopping and completing the stream when we reach the end of the file. Instead we schedule a later read to see if data was appended to the file since the last read.
 
 We first acquire a the `AsyncCallback` pointing to a local function that will be what actually handles the read bytes. `AsyncCallback` will only handle a single parameter, so we need to use a datatype that covers all the information we want to pass on, in this case we use the [scala.util.Try](http://www.scala-lang.org/api/2.11.8/index.html#scala.util.Try) data structure here which will either be a `Success(bytes)` or a `Failure(exception)` but this is not mandatory and you could of course use whatever class that fits your use case:
 
@@ -45,7 +45,7 @@ chunkCallback = createAsyncCallback((tryInteger) -> {
  }
 });
 ```
-[complete sources](https://github.com/akka/akka-stream-contrib/blob/master/contrib/src/main/java/akka/stream/contrib/FileTailSource.java#L90)
+[complete sources](https://github.com/akka/alpakka/blob/ae2e1e1d44d627ebc66a24ea35993398df7840bc/file/src/main/java/akka/stream/alpakka/file/javadsl/FileTailSource.java#L95)
 
 We then use that callback in the `CompletionHandler` which is how the `java.nio` API will call us back. Note that there is an “attachment” passed as a parameter from the read to the callback and the actual consumer is stateless meaning that in this specific case we can keep a consumer singleton and share it between all instances of the `GraphStageLogic` without problems.
 
@@ -56,7 +56,7 @@ private void doPull() {
   channel.read(buffer, position, chunkCallback, completionHandler);
 }
 ```
-[complete sources](https://github.com/akka/akka-stream-contrib/blob/master/contrib/src/main/java/akka/stream/contrib/FileTailSource.java#L116)
+[complete sources](https://github.com/akka/alpakka/blob/ae2e1e1d44d627ebc66a24ea35993398df7840bc/file/src/main/java/akka/stream/alpakka/file/javadsl/FileTailSource.java#L121)
 
 Which will invoke either of the two methods on the `CompletionHandler` when the read operation completes:
 
@@ -73,12 +73,12 @@ new CompletionHandler<Integer, AsyncCallback<Try<Integer>>>() {
   }
 };
 ```
-[complete sources](https://github.com/akka/akka-stream-contrib/blob/master/contrib/src/main/java/akka/stream/contrib/FileTailSource.java#L41)
+[complete sources](https://github.com/akka/alpakka/blob/ae2e1e1d44d627ebc66a24ea35993398df7840bc/file/src/main/java/akka/stream/alpakka/file/javadsl/FileTailSource.java#L47)
 
 We have full control over when we trigger a read here. This will play nicely with backpressure and the stage will simply not read data when downstream is back pressuring.
 
 ### AMQPSource
-A more complex example of an asynchronous callback is the AMQP connector source, also in [Akka Stream Contrib](https://github.com/akka/akka-stream-contrib), which uses the [RabbitMQ driver](https://www.rabbitmq.com/java-client.html) to connect to an AMQP capable message broker.
+A more complex example of an asynchronous callback is the AMQP connector source, also in [Alpakka](https://github.com/akka/alpakka), which uses the [RabbitMQ driver](https://www.rabbitmq.com/java-client.html) to connect to an AMQP capable message broker.
 
 The graph stage registers a listener which will be invoked when a message is available, and we use an `AsyncCallback` to make sure execution will be on the right thread:
 
@@ -115,7 +115,7 @@ channel.basicConsume(
   amqpSourceConsumer
 )
 ```
-[complete sources](https://github.com/akka/akka-stream-contrib/blob/master/amqp/src/main/scala/akka/stream/contrib/amqp/AmqpSource.scala#L66)
+[complete sources](https://github.com/akka/alpakka/blob/c1315a8d1979b4399b62db726c159d64149501f7/amqp/src/main/scala/akka/stream/alpakka/amqp/AmqpSourceStage.scala#L48)
 
 This alone does not help us with backpressure though, luckily the RabbitMQ client also lets us define a prefetch size together with an ACK protocol, so that we can limit the amount of outstanding unacknowledged messages.
 
@@ -130,7 +130,7 @@ def handleDelivery(message: IncomingMessage): Unit = {
   }
 }
 ```
-[complete sources](https://github.com/akka/akka-stream-contrib/blob/master/amqp/src/main/scala/akka/stream/contrib/amqp/AmqpSource.scala#L112)
+[complete sources](https://github.com/akka/alpakka/blob/c1315a8d1979b4399b62db726c159d64149501f7/amqp/src/main/scala/akka/stream/alpakka/amqp/AmqpSourceStage.scala#L100)
 
 It is important to isolate such stages on a separate dispatcher, preferably thread pool based ones. The number of threads will limit how many concurrent instances of the `GraphStageLogic` can run on the system but will not affect other parts.
 
@@ -169,15 +169,15 @@ public void onTimer(Object timerKey) {
   }
 }
 ```
-[complete sources](https://github.com/akka/akka-stream-contrib/blob/master/contrib/src/main/java/akka/stream/contrib/DirectoryChanges.java#L105)
+[complete sources](https://github.com/akka/alpakka/blob/c1315a8d1979b4399b62db726c159d64149501f7/file/src/main/java/akka/stream/alpakka/file/javadsl/DirectoryChangesSource.java#L133)
 
 Let's combine two of these samples into a stream that will emit local log entries tailed from a textfile as they are written and push each line to an AMQP broker:
 
 ```java
-Path logfile = FileSystems.getDefault().getPath("/var/log/system.log");
-FileTailSource.create(logfile, 4096, 0, FiniteDuration.create(250, TimeUnit.MILLISECONDS))
-  // stream individual lines as elements
-  .via(Framing.delimiter(ByteString.fromString("\n"), 4096))
+final Path logfile = FileSystems.getDefault().getPath("/var/log/system.log");
+final FiniteDuration pollingInterval = FiniteDuration.create(250, TimeUnit.MILLISECONDS);
+final int maxLineLength = 4096;
+FileTailSource.createLines(fs.getPath(path), maxLineLength, pollingInterval)
   .to(AmqpSink.simple(settings))
   .run(materializer);
 ```
