@@ -10,8 +10,6 @@ tags: [artery]
 ---
 {% include JB/setup %}
 
-## Post 2: Aeron in Artery
-
 We are using [Aeron](https://github.com/real-logic/Aeron) as the underlying transport in the new remoting implementation for Actor messages. The Aeron transport is based on UDP but it provides pretty much the same guarantees as TCP when it comes to message order and delivery. It is focused at performance and is more efficient than TCP.
 
 Artery is designed from the ground up to support high-throughput in the magnitude of 1 million messages per second and low-latency in the magnitude of 100 microseconds.
