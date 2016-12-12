@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: series_post
 title: "Streams in Artery"
 description: ""
 author: Patrik Nordwall
