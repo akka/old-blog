@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: series_post
 title: "Aeron in Artery"
 description: ""
 author: Patrik Nordwall
