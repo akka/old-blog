@@ -42,7 +42,7 @@ Having that said, let 2017 begin with full steam ahead.
 
 ## Looking for hakkers!
 
-While we have your attention here: We’re starting off the year 2017 strong, and looking to hire an additional hakker to the core Akka team. If that’s something you’d be interested in [head over to this post for more details](http://blog.akka.io/work/2017-01-17-looking-for-hakker.md). We’d love to hear from you, please follow the instructions in the other post to apply.
+While we have your attention here: We’re starting off the year 2017 strong, and looking to hire an additional hakker to the core Akka team. If that’s something you’d be interested in [head over to this post for more details](http://blog.akka.io/work/2017/01/17/looking-for-hakker). We’d love to hear from you, please follow the instructions in the other post to apply.
 
 Happy hakking!
 
