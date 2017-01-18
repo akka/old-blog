@@ -32,7 +32,7 @@ In terms of most anticipated features that you’d like to see developed, Typed 
 
 In addition we’d like to mention that we’ll be reworking some parts of the documentation (which 16% of you voted for) and adding a new layout to it as well as the website. In the docs rewrite we’ll explain the topics you marked as most difficult while learning Akka: splitting tasks into Actors (46%), how to operate clusters (36%) and using blocking resources (32%).
 
-So once more, we’d like to thank all of your who participated in the survey. Thank you! We’d also  As we promised during its announcement, we shipped over 100 t-shirts to randomly selected participants in the survey. 
+So once more, we’d like to thank all of your who participated in the survey. Thank you! As we promised during its announcement, we shipped over 100 t-shirts to randomly selected participants in the survey. 
 We hope those will help you share your love for Akka, concurrency and distributed computing among your peers! 
 You’ll notice we also sent out a few special *happy hakking* t-shirts, this was a secret initiative we launched in 2016 in which we rewarded top contributors to Akka for their ongoing efforts and awesome streams of pull requests. Want one of these? Simple, keep hacking, we’ll continue awarding the top-n most active / awesome contributors in 2017 (every few months).
 
