@@ -41,7 +41,13 @@ layout: page
         <div class="news-item">
             <div class="news-date">{{ p.date | date: "%b %d %Y" }}</div>
             <div class="news-title"><a href="{{ site.baseurl }}{{ p.url }}">{{ p.title }}</a></div>
-            <div class="news-body">{{ p.content | strip_html | truncatewords: 30 }}</div>
+            {% comment %}
+            Workaround for https://github.com/jekyll/jekyll-archives/issues/28
+            Need to clean up html and liquid template language from the archive posts manually.
+            Curly end brace assigment to a variable is a workadound for liquid template language not being able to escape end curly brace.
+            {% endcomment %}
+            {% assign curlyend = '}' %}
+            <div class="news-body">{{ p.content | markdownify | strip_html | replace: "{% include JB/setup %", "" | replace: curlyend, "" | truncatewords: 30 }}</div>
         </div>
         {% endif %}
         {% endfor %}
