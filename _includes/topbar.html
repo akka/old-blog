@@ -1,17 +1,19 @@
-<div class="navbar">
-  <div class="navbar-inner">
-    <div class="container">
-      <div class="navbar-logo">
-        <a href="http://akka.io/"><img class="svg-logo" src="{{ site.baseurl }}/resources/images/akka_full_color.svg" /></a>
-        <span class="next-to-logo">
-          <a href="http://blog.akka.io">
-            blog: Let it crash!
-          </a>
-        </span>
-      </div>
-      <ul class="nav">
+<header>
+  <div class="row">
+    <a class="logo" href="{{ site.baseurl }}/"><img class="svg-logo" src="{{ site.baseurl }}/resources/images/akka_full_color.svg" /></a>
+
+    <ul class="desktopHeaderNav desktop-only">
+      {%  include top-bar-links.html %}
+    </ul>
+
+    <ul class="mobileHeaderNavButton">
+      <li><a href="#mobileHeaderNav" id="go-to-navigation" class="mini-toggler ss-icons ss-rows"></a></li>
+    </ul>
+
+    <nav id="mobileHeaderNav" class="hidden">
+      <ul>
         {%  include top-bar-links.html %}
       </ul>
-    </div>
+    </nav>
   </div>
-</div>
+</header>

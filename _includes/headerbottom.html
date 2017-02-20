@@ -41,4 +41,5 @@
         })();
     </script>
 </head>
-<body onload="prettyPrint()" >
+{% capture layout %}{% if page.layout %}{{ page.layout }}{% endif %}{% endcapture %}
+<body onload="prettyPrint()" class="{{ layout }}">
