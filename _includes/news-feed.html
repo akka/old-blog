@@ -1,15 +1,26 @@
-{% for p in site.posts limit: 3 %}
-	<div class="news-item">
-		<div class="news-date">{{ p.date | date: "%b %d %Y" }}</div>
+{% for p in site.posts limit: 4 %}
+	<li>
 		{% if p.link-out %}
-			<div class="news-title"><a href="{{ p.link-out }}">{{ p.title }}</a></div>
+			<a href="{{ p.link-out }}" alt="{{ p.title }}">
 		{% else %}
-			<div class="news-title"><a href="{{ site.baseurl }}{{ p.url }}">{{ p.title }}</a></div>
+			<a href="{{ site.baseurl }}{{ p.url }}" alt="{{ p.title }}">
 		{% endif %}
+			<div class="newsDate">
+				<p>{{ p.date | date: "%b" }}</p>
+				<p>{{ p.date | date: "%d" }}</p>
+				<p>{{ p.date | date: "%Y" }}</p>
+			</div>
 		{% if p.short %}
-			<div class="news-body">{{ p.short }}</div>
+			<div class="newsContent">
+				<h1>{{ p.title }}</h1>
+				<p>{{ p.short }}</p>
+			</div>
 		{% else %}
-			<div class="news-body">{{ p.content | strip_html | truncatewords: 30 }}</div>
+			<div class="newsContent">
+				<h1>{{ p.title }}</h1>
+				<p>{{ p.content | strip_html | truncatewords: 30 }}</p>
+			</div>
 		{% endif %}
-	</div>
+		</a>
+	</li>
 {% endfor %}

@@ -1,20 +1,47 @@
 ---
-layout: page
+layout: news
 title : Let it crash! – the Akka team blog
 header : Let it crash! – the Akka team blog
 group: navigation
 ---
 {% include JB/setup %}
 
-{% for post in site.posts %}
-<h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
-<p>
-    <strong>{{ post.date | date: "%B %e, %Y" }}</strong>
-    <p class="news-body">{{ post.content | strip_html | truncatewords: 50 }}</p>
-   
-    <small>
-        category: {{ post.category }} 
-        <!--<a href="http://letitcrash.com{{ post.url }}#disqus_thread">comments</a>-->
-    </small>
-</p>
-{% endfor %}
+<section class="wrapper">
+	<div class="row">
+		<div class="ninecol">
+			<div class="box selArticle">
+				{% for post in site.posts limit: 1 %}
+				<div class="selArticleHeader">
+					<div class="date">
+						<p>{{ post.date | date: "%B %d"}}</p>
+						<p>{{ post.date | date: "%Y "}}</p>
+					</div>
+					<h1>{{ post.title }}</h1>
+				</div>
+				<div class="selArticleContent">
+					{{ post.content }}
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="threecol latestArticles">
+			<h2>Latest articles</h2>
+			<ul>
+				{% for post in site.posts limit: 5 %}
+					{% if forloop.index <= 1 %}
+					{% else %}
+						<li>
+							<p>{{ post.date | date: "%b %d %Y" }}</p>
+							{% if post.link-out %}
+							<a href="{{ post.link-out }}">{{ post.title }}</a>
+							{% else %}
+							<a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+						{% endif %}
+						</li>
+					{% endif %}
+				{% endfor %}	
+			</ul>
+			<a href="{{ site.baseurl }}/news/all-news.html" class="btn sec">Full archive</a>
+		</div>
+	</div>
+</section>
