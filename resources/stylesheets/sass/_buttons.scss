@@ -1,0 +1,71 @@
+/* mozilla button bug */
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0
+}
+%basic-btn {
+  font-weight: bold;
+  font-family: "ProximaNova";
+  @include x-rem(font-size, 1.6);
+  color: #fff;
+  line-height: 18px;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  padding: 20px 25px;
+  border: none;
+  cursor: pointer;
+  &:focus {
+      outline: 0;
+  }
+}
+.btn {
+  @extend %basic-btn;
+  @include box-shadow;
+  margin: 0 15px 15px 0;
+  background-color: $pri_orange;
+  -webkit-box-sizing:content-box;
+  -moz-box-sizing:content-box;
+  box-sizing:content-box;
+
+  @include single-column {
+    width: 100%;
+    display: block;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &:hover {
+    border-bottom: 0;
+    color: #fff;
+    background-color: $sec_orange;
+  }
+  &:focus {
+      outline: 0;
+  }
+  &.right {
+    margin: 0 0 18px 15px;
+  }
+}
+
+.btn.sec {
+  background-color: $pri_blue;
+}
+
+.btn.mobile {
+  background-color: $pri_blue;
+  display: none;
+  margin: 0;
+  @include single-column {
+    display: block;
+    width: auto;
+    padding: 20px 25px;
+  } 
+}
+
+.btn.documentation {
+  background-color: $pri_blue;
+  @include x-rem(font-size, 1.4);
+  padding: 16px 25px;
+}

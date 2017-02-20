@@ -1,0 +1,59 @@
+---
+# Front matter comment to ensure Jekyll properly reads file.
+---
+
+@charset "utf-8";
+
+// Main font-size
+$main-font-size: 18px;
+
+// Reset
+@import "sass/reset.scss";
+
+// Media Queries and Mixins
+@import "sass/media-queries.scss";
+
+// Helpers
+@import "sass/helpers.scss";
+
+// Grid
+@import "sass/grid.scss";
+
+// Fonts
+@import "sass/fonts.scss";
+
+// Colors
+@import "sass/colors.scss";
+
+// Forms
+@import "sass/forms.scss";
+
+// Header
+@import "sass/header.scss";
+
+// Typography
+@import "sass/type.scss";
+
+// Footer
+@import "sass/footer.scss";
+
+// Content
+@import "sass/content.scss";
+
+// Boxes
+@import "sass/box.scss";
+
+// Buttons
+@import "sass/buttons.scss";
+
+// Views
+@import "sass/views/start-page.scss";
+@import "sass/views/documentation.scss";
+@import "sass/views/news-page.scss";
+@import "sass/views/get-involved-page.scss";
+@import "sass/views/actors-page.scss";
+@import "sass/views/contents-page.scss";
+
+//Modules
+@import "sass/modules/news.scss";
+@import "sass/modules/stickySearch.scss";

@@ -1,0 +1,30 @@
+.get-involved {
+	.communityContent {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 30px;
+		@include single-column {
+			display: block;
+			margin-bottom: 0;
+		}
+		.box {
+			@include box-shadow;
+			width: 32%;
+			text-align: center;
+			@include single-column {
+				width: 100%;
+				margin-bottom: 30px;
+			}
+			img {
+				height: 100px;
+			}
+			h1 {
+				@include x-rem(font-size, 2);
+			}
+			a {
+				margin-bottom: 20px;
+				display: inline-block;
+			}
+		}
+	}
+}

@@ -1,0 +1,59 @@
+/* Welcome to content.scss - Here are rules that does not fit anywhere else */
+
+//Body and Wrapper rules
+* {
+	margin: 0;
+}
+
+html, body {
+  height: 100%;
+  background-color: $background;
+}
+
+img {
+	height: auto;
+}
+
+.wrapper {
+  padding: 0 20px;
+  clear: both;
+}
+
+.reactRibbon {
+	position: absolute;
+	top: 0;
+	z-index: 9000;
+	right: 0;
+	border: 0;
+  &:hover {
+    border-bottom: none;
+  }
+  @include react-header {
+    top: 80px;
+  }
+	@include single-column {
+		display: none;
+	}
+}
+
+.headerHero {
+  background-color: $pri_midblue;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-image: url(../images/bg.jpg);
+  background-repeat: no-repeat;
+  padding-top: 120px;
+  padding-bottom: 20px;
+  margin-bottom: 60px;
+  h1 {
+    color: #fff;
+    flex: 1;
+  }
+  div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

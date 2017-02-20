@@ -1,0 +1,21 @@
+/* Welcome to forms.scss - Here are rules that control your forms.*/
+
+//Form Specific
+input[type=search] {
+	padding: 10px;
+	min-width: 200px;
+	margin:0;
+	border:0;
+	display:inline-block;
+	vertical-align:middle;
+	@include x-rem(font-size, 1.5);
+	white-space:normal;
+	background:#fff;
+	line-height:1;
+	-webkit-box-sizing:content-box;
+	-moz-box-sizing:content-box;
+	box-sizing:content-box;
+	&:focus {
+		outline: 0;
+	}
+}

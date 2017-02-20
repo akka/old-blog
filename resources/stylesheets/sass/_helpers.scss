@@ -1,0 +1,126 @@
+/* Welcome to helpers.scss - Here are rules that helps you with stuff */
+
+/* rem fallback to pixels */
+@mixin x-rem ($property, $value) {
+  #{$property}: $value * 10px;
+  #{$property}: #{($value*10) / ($main-font-size / 1px)}rem;
+}
+
+// use one mixin for styling placeholder text cross browser
+@mixin placeholder ($color) {
+  /* WebKit browsers */
+  ::-webkit-input-placeholder { 
+    color: $color;
+  }
+  /* Mozilla Firefox 4 to 18 */
+  input:-moz-placeholder,
+  textarea:-moz-placeholder { 
+    color: $color;
+  }
+  /* Mozilla Firefox 19+ */
+  ::-moz-placeholder { 
+    color: $color;
+  }
+  /* Internet Explorer 10+ */
+  :-ms-input-placeholder { 
+    color: $color;
+  }
+}
+
+// Mixin for extended width boxes
+@mixin extended-width-singlecol () {
+  margin-left: -2.65957%;
+  width: 100%;
+  padding-left: 2.65957%;
+  padding-right: 2.65957%;
+}
+
+// generic hidden/active class
+.hidden {
+  display: none;
+}
+.active {
+  display: block;
+}
+
+//Mobile only elements
+.mobile-only {
+  display: none;
+  @include single-column {
+    display: block;
+  }
+}
+.desktop-only {
+  @include single-column {
+    display: none;
+  }
+}
+
+// float left/right helpers
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.center {
+  text-align: center;
+}
+
+// clearfix
+//Clearfix
+.cf:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+@mixin bleed($padding: $grid-padding, $sides: left right) {
+  @if $sides == 'all' {
+    margin: - $padding;
+    padding: $padding;
+  } @else {
+    @each $side in $sides {
+      margin-#{$side}: - $padding;
+      padding-#{$side}: $padding;
+    }
+  }
+}
+
+@mixin box-shadow {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+@mixin hero {
+  background-color: $pri_midblue;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-image: url(../images/bg.jpg);
+  background-repeat: no-repeat;
+  padding-top: 160px;
+}
+
+@mixin lists {
+  ul, ol { 
+    display: block;
+    list-style-type: disc;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 40px;
+  }
+}
+
+@mixin lists-no-indent {
+  ul, ol { 
+    display: block;
+    list-style-type: disc;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: inherit;
+  }
+}

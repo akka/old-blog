@@ -1,0 +1,194 @@
+/* Welcome to grid.scss - Here are rules that controls your grid
+feel free to change max-width to either 1060px or 960px */
+
+/* SETTINGS */
+// Number of colums
+$columns: 12;
+// Site width
+$width: 100%;
+// Site max width
+$max_width: 1060px;
+// Site gutter margin
+$gutter: 1.8867924528301886%;
+
+
+/* HELPER FUNCTIONS */
+// Calculate width for one column
+@function col_width($total_cols){
+  @return ( $width - (($total_cols - 1) * $gutter)) / $total_cols
+}
+// Calculate width for columns
+@function col($col, $total_cols){
+  @return (col_width($total_cols) * $col) + ($gutter * ($col - 1));
+}
+@mixin fixed-single-column($col) {
+  &.single {
+    width: 100%;
+    // set max-width to rem value
+    @include x-rem(max-width, ((col($col, 12) / 1%) * $max_width) / 1000px);
+  
+    // unset it for the single column mode
+    @include single-column {
+      max-width: none;
+    }
+  }
+}
+
+// wrapper
+.wrapper {
+  /* fixed padding outside of grid */
+  padding: 0 20px;
+  clear: both; /* fix for firefox border-box-sizing-bug(?) */
+  @include single-column {
+    padding-left: 2.6595744680851064%;
+    padding-right: 2.6595744680851064%;
+  }
+}
+
+/* add colors to grid */
+.wrapper.helper {
+  .onecol,
+  .twocol,
+  .threecol,
+  .fourcol,
+  .fivecol,
+  .sixcol,
+  .sevencol,
+  .eightcol,
+  .ninecol,
+  .tencol,
+  .elevencol,
+  .twelvecol {
+    background: rgba(255, 0, 0, 0.2);
+  }
+}
+
+// Always clearfix row
+.row:before,
+.row:after {
+  content: "";
+  display: table;
+}
+.row:after {
+  clear: both;
+}
+
+.row {
+  width: auto;
+  max-width: $max_width;
+  margin: 0 auto;
+  zoom: 1;
+
+  @include single-column {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+.onecol,
+.twocol,
+.threecol,
+.fourcol,
+.fivecol,
+.sixcol,
+.sevencol,
+.eightcol,
+.ninecol,
+.tencol,
+.elevencol,
+.twelvecol {
+  position: relative;
+
+  @include single-column {
+    width: auto !important;
+    float: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    clear: both;
+  }
+}
+
+.onecol,
+.twocol,
+.threecol,
+.fourcol,
+.fivecol,
+.sixcol,
+.sevencol,
+.eightcol,
+.ninecol,
+.tencol,
+.elevencol {
+  margin-left: $gutter;
+  float: left;
+}
+
+.onecol:first-child,
+.twocol:first-child,
+.threecol:first-child,
+.fourcol:first-child,
+.fivecol:first-child,
+.sixcol:first-child,
+.sevencol:first-child,
+.eightcol:first-child,
+.ninecol:first-child,
+.tencol:first-child,
+.elevencol:first-child {
+  margin-left: 0;
+  clear: left; /* fix for firefox border-box-sizing-bug(?) */
+}
+.visually-first {
+  margin-left: 0;
+}
+
+.onecol {
+  width: col(1, 12);
+}
+
+.twocol {
+  width: col(2, 12);
+}
+
+.threecol {
+  width: col(3, 12);
+}
+
+.fourcol {
+  width: col(4, 12);
+}
+
+.fivecol {
+  width: col(5, 12);
+}
+
+.sixcol {
+  width: col(6, 12);
+  @include fixed-single-column(6);
+}
+
+.sevencol {
+  width: col(7, 12);
+}
+
+.eightcol {
+  width: col(8, 12);
+  @include fixed-single-column(8);
+}
+
+.ninecol {
+  width: col(9, 12);
+}
+
+.tencol {
+  width: col(10, 12);
+}
+
+.elevencol {
+  width: col(11, 12);
+}
+
+.twelvecol {
+  width: col(12, 12);
+}

@@ -1,0 +1,13 @@
+/* Welcome to box.scss - Here are rules for responsive boxes with backgrounds */
+
+// generic content box
+.box {
+  background-color: #fff;
+  padding: 15px;
+  margin: 0;
+  box-sizing: border-box;
+  @include single-column {
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+  }
+}

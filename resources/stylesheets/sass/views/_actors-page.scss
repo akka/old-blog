@@ -1,0 +1,279 @@
+.documentationActors,
+.documentationActorsOld {
+	.docuHeaderHero {
+		z-index: 100;
+  	background-color: $pri_midblue;
+  	background-size: cover;
+  	background-position: 50% 50%;
+  	background-image: url(../images/bg.jpg);
+  	background-repeat: no-repeat;
+  	padding-top: 120px;
+  	padding-bottom: 20px;
+  	margin-bottom: 60px;
+  	@include single-column {
+  		padding-top: 100px;
+  	}
+  	h1 {
+    	color: #fff;
+  	}
+		.headerContainer {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: space-between;
+			align-items: baseline;
+			@include single-column {
+				flex-direction: column;
+				justify-content: flex-start;
+			}
+			.headerSearch {
+				input {
+					min-width: 250px;
+					@include single-column {
+						display: block;
+					}
+				}
+				span {
+					margin-left: 10px;
+					color: #fff;
+					@include x-rem(font-size, 1.6);
+					@include single-column {
+						display: block;
+						margin-left: 0;
+					}
+				}
+			}
+			.headerButtons {
+				@include single-column {
+					width: 100%;
+				}
+				a {
+					box-sizing: border-box;
+					margin: 0 0 0 15px;
+					@include x-rem(font-size, 1.4);
+  				padding: 16px 25px;
+  				@include single-column {
+  					width: 100%;
+  					margin: 15px 0;
+  				}
+				}
+			}
+		}
+	}
+	.sideBar {
+		a.sideBarActive {
+			color: $pri_lightblue !important;
+			&:hover {
+				color: $pri_midblue !important;
+			}
+		}
+		.sideBarTopLevel {
+			padding: 0;
+    	margin: 0;
+    	list-style: none;
+    	text-transform: capitalize;
+    	li {
+				a {
+					color: $pri_blue;
+					border-bottom: none;
+					padding: 3px 0;
+					@include x-rem(font-size, 1.4);
+					&:hover {
+						color: $pri_lightblue;
+						border-bottom: none;
+					}
+    		}
+    	}
+    	.sideBarSecondLevel {
+    		border-left: 2px solid #e7e7e7;
+				padding-left: 10px;
+    		margin: 10px 0 10px 10px;
+    		li {
+    			a {
+    				font-weight: normal;
+    				border-bottom: 1px solid $pri_blue;
+    				&:hover {
+    					border-bottom: 1px solid $pri_lightblue;
+    				}
+    			}
+    		}
+    		.sideBarThirdLevel {
+    			margin: 0 0 10px 10px;
+    		}
+    	}
+		}
+	}
+	.documentationContent {
+		h1 {
+			@include x-rem(font-size, 3.0);
+			color: $pri_lightblue;
+			margin-bottom: 30px;
+		}
+		h1.super {
+			@include x-rem(font-size, 3.4);
+		}
+		h2 {
+			@include x-rem(font-size, 2.4);
+			color: $pri_lightblue;
+			margin-bottom: 10px;
+		}
+		span {
+			@include x-rem(font-size, 1.6);
+			color: #000;
+		}
+		p {
+			@include x-rem(font-size, 1.6);
+			color: #000;
+			margin-bottom: 30px;
+		}
+		p.intro {
+			margin-bottom: 0;
+		}
+		a {
+			color: $pri_orange;
+			border-bottom: 1px solid $pri_orange;
+			&:hover {
+				color: $sec_orange;
+				border-bottom: 1px solid $sec_orange;
+			}
+		}
+		ol.arabic {
+			display: block;
+    	list-style-type: decimal;
+    	margin-top: 1em;
+    	margin-bottom: 1em;
+    	margin-left: 0;
+    	margin-right: 0;
+    	padding-left: 40px;
+    	li {
+				color: #000;
+				@include x-rem(font-size, 1.6);
+			}
+		}
+		ul.simple {
+			display: block;
+    	list-style-type: disc;
+    	margin-top: 1em;
+    	margin-bottom: 1em;
+    	margin-left: 0;
+    	margin-right: 0;
+    	padding-left: 40px;
+    	li {
+				color: #000;
+				@include x-rem(font-size, 1.6);
+			}
+		}
+		span.pre {
+			font-family: "Source";
+			@include x-rem(font-size, 1.6);
+			color: #000;
+			background-color: rgba(255,255,255,0.8);
+			padding: 2px;
+			word-wrap: break-word;
+		}
+		.box {
+			margin-bottom: 30px;
+			h3 {
+				color: $pri_lightblue;
+				@include x-rem(font-size, 1.8);
+				margin-bottom: 13px;
+			}
+			p {
+				margin-bottom: 10px;
+			}
+		}
+		.box.note {
+			background-color: #fff;
+			border-left: 10px solid $pri_lightblue;
+		}
+		.box.warning {
+			background-color: #fff;
+			border-left: 10px solid #ff534b;
+			h3 {
+				color: #ff534b;
+			}
+		}
+		.box.code {
+			background-color: #fff;
+			border-left: 10px solid #e5e6e4;
+			font-family: "Source";
+			@include x-rem(font-size, 1.6);
+			font-weight: bold;
+			color: #000;
+			.num {
+				color: #a3a5a7;
+				font-weight: normal;
+				margin-right: 15px;
+			}
+			.dg {
+				color: #43a047;
+			}
+			.lg {
+				color: #64dd17;
+			}
+			.b {
+				color: #15a9ce;
+			}
+		}
+	}
+	#stickyOld {
+		background-color: rgba(255,73,66,0.9);
+    position: fixed;
+    z-index: 1000;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    text-align: center;
+    h2 {
+			@include x-rem(font-size, 2);
+			color: #fff;
+			@include single-column {
+				@include x-rem(font-size, 1.6);
+			}
+    }
+    p {
+			@include x-rem(font-size, 1.6);
+			margin-bottom: 0;
+			color: #fff;
+			@include single-column {
+				@include x-rem(font-size, 1.4);
+			}
+    }
+    a {
+			color: #fff;
+			border-bottom: 1px solid #fff;
+			&:hover {
+				color: rgba(255,255,255,0.6);
+				border-bottom: 1px solid rgba(255,255,255,0.6);
+			}
+			@include single-column {
+				@include x-rem(font-size, 1.4);
+			}
+    }
+    #stickyOldClose {
+    	position: absolute;
+    	top: 15px;
+    	right: 15px;
+    	color: #fff;
+    	border-bottom: 1px solid #fff;
+    	font-weight: bold;
+    	cursor: pointer;
+    	@include x-rem(font-size, 1.6);
+    	&:hover {
+				color: rgba(255,255,255,0.6);
+				border-bottom: 1px solid rgba(255,255,255,0.6);	
+    	}
+    	@include single-column {
+    		top: -44px;
+    		right: 0;
+    		background-color: rgba(255,73,66,0.9);
+    		padding: 10px;
+    		border-bottom: none;
+    		&:hover {
+    			border-bottom: none;
+    		}
+    	}
+    }
+	}
+}

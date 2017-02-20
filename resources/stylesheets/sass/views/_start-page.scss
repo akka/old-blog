@@ -1,0 +1,74 @@
+.hero {
+	@include hero;
+	@include single-column {
+		padding-top: 100px;
+	}
+	h1 {
+		margin: 0;
+	}
+	.heroParagraph {
+		margin: 50px 0;
+		color: #fff;
+	}
+	.btn.sec {
+		display: none;
+  	@include single-column {
+    	display: block;
+  	}
+	}
+	.heroSmall {
+		@include x-rem(font-size, 1.4);
+		margin-top: 30px;
+		color: #fff;
+	}
+	.heroInfo {
+		margin-left: 10%;
+		margin-bottom: 60px;
+		@include single-column {
+			margin: 40px 0;
+		}
+		li {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: flex-start;
+			align-items: center;
+			margin-bottom: 30px;
+			img {
+				height: 50px;
+				width: 50px;
+				margin-right: 20px;
+			}
+			span {
+				h2 {
+					color: #fff;
+					@include x-rem(font-size, 1.8);
+				}
+				p {
+					@include x-rem(font-size, 1.4);
+					color: #fff;
+					margin: 0;
+				}
+			}
+		}
+	}
+}
+
+.prodUsers {
+	margin: 60px 0;
+	text-align: center;
+	p {
+		color: $pri_text;
+	}
+}
+
+.indexLatest {
+	margin: 60px 0 0 0;
+	text-align: center;
+	.newsContainer li {
+		width: 80%;
+		@include single-column {
+			width: 100%;
+		}
+	}
+}

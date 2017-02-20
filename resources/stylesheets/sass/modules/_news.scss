@@ -1,0 +1,62 @@
+.newsContainer {
+	li {
+		@include box-shadow;
+		margin: 0 auto 30px auto;
+		a {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: flex-start;
+			border-bottom: none;
+			&:hover {
+				.newsContent {
+					background-color: rgba(255,255,255,0.7);
+				}
+				.newsDate {
+					background-color: $sec_orange;
+				}
+			}
+			@include single-column {
+				flex-direction: column;
+			}
+			.newsDate {
+				background-color: $pri_orange;
+				padding: 40px 20px;
+				text-align: center;
+				@include single-column {
+					padding: 10px 10px 10px 20px;
+				}
+				p {
+					margin: 0;
+					@include x-rem(font-size, 1.5);
+					font-weight: bold;
+					color: #fff;
+					@include single-column {
+						display: inline-block;
+						margin-right: 5px;
+					}
+				}
+			}
+			.newsContent {
+				background-color: #fff;
+				width: 100%;
+				padding: 20px;
+				text-align: left;
+				@include single-column {
+					width: auto;
+				}
+				h1 {
+					@include x-rem(font-size, 2.7);
+					font-weight: bold;
+					margin-bottom: 15px;
+					color: $pri_blue;
+				}
+				p {
+					font-weight: normal;
+					margin: 0;
+					color: #000
+				}
+			}
+		}
+	}
+}

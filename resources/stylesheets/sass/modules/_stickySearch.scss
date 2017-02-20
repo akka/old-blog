@@ -1,0 +1,122 @@
+.stickySearchBar {
+	display: none;
+	z-index: -100;
+	position: absolute;
+  top: 166px;
+  left: 0;
+  right: 0;
+  background-color: $pri_midblue;
+	background-size: cover;
+	background-position: 50% 58%;
+	background-image: url(../images/bg.jpg);
+	background-repeat: no-repeat;
+	@include single-column {
+		display: none;
+		z-index: -100;
+	}
+	.row {
+		.headerContainer {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: space-between;
+			align-items: center;
+			@include single-column {
+				flex-direction: column;
+				justify-content: flex-start;
+			}
+			.headerSearch {
+				@include single-column {
+					width: 100%;
+				}
+				#search-ref-docs {
+					display: flex;
+					flex-direction: row;
+					flex-wrap: nowrap;
+					justify-content: space-between;
+					align-items: center;
+					@include single-column {
+						justify-content: flex-start;
+					}
+					li {
+						p {
+							color: #fff;
+							margin: 0 15px;
+						}
+						input {
+  						-webkit-appearance: none;
+  						-moz-appearance: none;
+  						min-width: 250px;
+  						@include single-column {
+  							min-width: auto;
+  						}
+						}
+						select {
+  						border: none;
+  						border-radius: 0;
+  						display: inline-block;
+  						font: inherit;
+  						line-height: 1.5em;
+  						padding: 0.4em 3.5em 0.4em 1em;
+  						margin: 0;      
+  						-webkit-box-sizing: border-box;
+  						-moz-box-sizing: border-box;
+  						box-sizing: border-box;
+  						-webkit-appearance: none;
+  						-moz-appearance: none;
+							background-image:
+    						url("../images/arrowdown.svg");
+  						background-position:
+    						calc(100% - 20px) calc(0em + 15px),
+    						calc(100% - 15px) calc(1em + 2px),
+    						100% 0;
+  						background-size:
+    						10px 10px,
+    						10px 10px,
+    						2.5em 2.5em;
+  						background-repeat: no-repeat;
+    					&:focus {
+    						outline: none;
+    					}
+							option {
+
+							}
+						}
+					}
+				}
+				span {
+					color: #fff;
+					@include x-rem(font-size, 1.6);
+					@include single-column {
+						display: block;
+						margin-left: 0;
+					}
+				}
+			}
+			.headerButtons {
+				@include single-column {
+					width: 100%;
+				}
+				a {
+					box-sizing: border-box;
+					margin: 0 15px 0 0;
+					@include x-rem(font-size, 1.4);
+				}
+			}
+		}
+	}
+}
+.navbar-fixed {
+	z-index: 1000;
+	display: block;
+	position: fixed;
+	top: 0;
+	padding: 15px;
+	@include single-column {
+		display: none;
+		z-index: -100;
+	}
+	.row .headerContainer .headerSearch input {
+		width: 300px;		
+	}
+}

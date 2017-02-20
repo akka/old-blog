@@ -1,0 +1,103 @@
+.documentationContents {
+	.docuHeaderHero {
+		z-index: 100;
+  	background-color: $pri_midblue;
+  	background-size: cover;
+  	background-position: 50% 50%;
+  	background-image: url(../images/bg.jpg);
+  	background-repeat: no-repeat;
+  	padding-top: 120px;
+  	padding-bottom: 20px;
+  	margin-bottom: 60px;
+  	@include single-column {
+  		padding-top: 100px;
+  	}
+  	h1 {
+    	color: #fff;
+  	}
+		.headerContainer {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: space-between;
+			align-items: baseline;
+			@include single-column {
+				flex-direction: column;
+				justify-content: flex-start;
+			}
+			.headerSearch {
+				input {
+					min-width: 250px;
+					@include single-column {
+						display: block;
+					}
+				}
+				span {
+					margin-left: 10px;
+					color: #fff;
+					@include x-rem(font-size, 1.6);
+					@include single-column {
+						display: block;
+						margin-left: 0;
+					}
+				}
+			}
+			.headerButtons {
+				@include single-column {
+					width: 100%;
+				}
+				a {
+					box-sizing: border-box;
+					margin: 0 0 0 15px;
+					@include x-rem(font-size, 1.4);
+  				padding: 16px 25px;
+  				@include single-column {
+  					width: 100%;
+  					margin: 15px 0;
+  				}
+				}
+			}
+		}
+	}
+	.contentsContainer {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 30px;
+		@include single-column {
+			display: block;
+			margin-bottom: 0;
+		}
+		.box {
+			@include box-shadow;
+			width: 24%;
+			@include single-column {
+				width: 100%;
+				margin-bottom: 30px;
+			}
+			h1 {
+				color: $pri_lightblue;
+				text-align: center;
+				@include x-rem(font-size, 2.4);
+			}
+			.underLine {
+				width: 60%;
+				border-bottom: 1px solid rgba(0,0,0,0.2);
+				margin: 0 auto 30px auto;
+				display: block;
+			}
+			@include lists-no-indent;
+			ul {
+				li {
+					a {
+						color: $pri_blue;
+						border-bottom: 1px solid $pri_blue;
+						&:hover {
+							color: $pri_midblue;
+							border-bottom: 1px solid $pri_midblue;
+						}
+					}
+				}
+			}
+		}
+	}
+}
