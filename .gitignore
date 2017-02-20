@@ -10,3 +10,7 @@ Thumbs.db
 .rvmrc
 
 .idea
+
+# Ignore cache
+/.sass-cache
+/.cache

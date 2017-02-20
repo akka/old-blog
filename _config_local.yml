@@ -5,3 +5,7 @@ baseurl: ""
 markdown: kramdown
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
+
+sass: 
+  sass_dir: resources/stylesheets
+  style: compressed

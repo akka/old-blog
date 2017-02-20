@@ -114,3 +114,6 @@ JB :
   #   ./_includes/custom/[HELPER]
   # where [HELPER] is the name of the helper you are overriding.
   
+  sass: 
+    sass_dir: resources/stylesheets
+    style: compressed
