@@ -33,6 +33,9 @@
 		.selArticleContent {
 			@include lists;
 		}
+		.selArticleDisqus {
+			margin-top: 100px;
+		}
 	}
 	
 	.latestArticles {

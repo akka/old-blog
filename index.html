@@ -1,7 +1,7 @@
 ---
 layout: news
-title : Let it crash! – the Akka team blog
-header : Let it crash! – the Akka team blog
+title : News & Articles
+header : News & Articles
 group: navigation
 ---
 {% include JB/setup %}
@@ -22,23 +22,53 @@ group: navigation
 					{{ post.content }}
 				</div>
 				{% endfor %}
+				<div class="selArticleDisqus">
+         <!-- Disqus Comments -->
+         <div id="disqus_thread"></div>
+         <script>
+             (function() {  // DON'T EDIT BELOW THIS LINE
+                 var d = document, s = d.createElement('script');
+                 s.src = '//blogakkaio.disqus.com/embed.js';
+                 s.setAttribute('data-timestamp', +new Date());
+                 (d.head || d.body).appendChild(s);
+             })();
+         </script>
+         <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+         <!-- end of #disqus -->
+        </div>
 			</div>
 		</div>
 		<div class="threecol latestArticles">
+			<h2>Latest news</h2>
+			<ul>
+				{% assign no_artery = "" | split: "" %}
+				{% for post in site.posts %}
+				{% unless post.categories contains 'artery' %}
+				{% assign no_artery = no_artery | push: post %}
+				{% endunless %}
+				{% endfor %}
+				{% for post in no_artery limit: 5 %}
+					<li>
+						<p>{{ post.date | date: "%b %d %Y" }}</p>
+						{% if post.link-out %}
+						<a href="{{ post.link-out }}">{{ post.title }}</a>
+						{% else %}
+						<a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+						{% endif %}
+					</li>
+				{% endfor %}	
+			</ul>
 			<h2>Latest articles</h2>
 			<ul>
-				{% for post in site.posts limit: 5 %}
-					{% if forloop.index <= 1 %}
-					{% else %}
-						<li>
-							<p>{{ post.date | date: "%b %d %Y" }}</p>
-							{% if post.link-out %}
-							<a href="{{ post.link-out }}">{{ post.title }}</a>
-							{% else %}
-							<a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+				{% for post in site.categories.artery limit: 5 %}
+					<li>
+						<p>{{ post.date | date: "%b %d %Y" }}</p>
+						{% if post.link-out %}
+						<a href="{{ post.link-out }}">{{ post.title }}</a>
+						{% else %}
+						<a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
 						{% endif %}
-						</li>
-					{% endif %}
+					</li>
 				{% endfor %}	
 			</ul>
 			<a href="{{ site.baseurl }}/news/all-news.html" class="btn sec">Full archive</a>
