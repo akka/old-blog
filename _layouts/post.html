@@ -1,56 +1,71 @@
 ---
-layout: default
+layout: news
 ---
-<h1>BAJS</h1>
-<h1>BAJS</h1>
-<h1>BAJS</h1>
-<h1>BAJS</h1>
-<h1>BAJS</h1>
-<div class="row">
-    <div class="span8">
-        <div class="news-story">
-            <div class="news-body" style="padding-top: 10px;">{{ content }}</div>
-            <div class="news-author" style="font-size: 18px;">-- {{ page.author }}</div>
-            <div class="news-date">{{ page.date | date: "%B %d %Y "}}</div>
+
+<section class="wrapper">
+    <div class="row">
+        <div class="ninecol">
+            <div class="box selArticle">
+                <div class="selArticleHeader">
+                    <div class="date">
+                        <p>{{ page.date | date: "%B %d"}}</p>
+                        <p>{{ page.date | date: "%Y "}}</p>
+                    </div>
+                    <h1>{{ page.title }}</h1>
+                </div>
+                <div class="selArticleContent">
+                    {{ content }}
+                </div>
+                <div class="selArticleDisqus">
+         <!-- Disqus Comments -->
+         <div id="disqus_thread"></div>
+         <script>
+             (function() {  // DON'T EDIT BELOW THIS LINE
+                 var d = document, s = d.createElement('script');
+                 s.src = '//blogakkaio.disqus.com/embed.js';
+                 s.setAttribute('data-timestamp', +new Date());
+                 (d.head || d.body).appendChild(s);
+             })();
+         </script>
+         <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+         <!-- end of #disqus -->
         </div>
-        <div>
-            <br/>
-            <br/>
-            <hr/>
-
-            <!-- Disqus Comments -->
-            <div id="disqus_thread"></div>
-            <script>
-                (function() {  // DON'T EDIT BELOW THIS LINE
-                    var d = document, s = d.createElement('script');
-                    s.src = '//blogakkaio.disqus.com/embed.js';
-                    s.setAttribute('data-timestamp', +new Date());
-                    (d.head || d.body).appendChild(s);
-                })();
-            </script>
-            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-            <!-- end of #disqus -->
-
+            </div>
+        </div>
+        <div class="threecol latestArticles">
+            <h2>Latest news</h2>
+            <ul>
+                {% assign no_artery = "" | split: "" %}
+                {% for post in site.posts %}
+                {% unless post.categories contains 'artery' %}
+                {% assign no_artery = no_artery | push: post %}
+                {% endunless %}
+                {% endfor %}
+                {% for post in no_artery limit: 5 %}
+                    <li>
+                        <p>{{ post.date | date: "%b %d %Y" }}</p>
+                        {% if post.link-out %}
+                        <a href="{{ post.link-out }}">{{ post.title }}</a>
+                        {% else %}
+                        <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}    
+            </ul>
+            <h2>Latest articles</h2>
+            <ul>
+                {% for post in site.categories.artery limit: 5 %}
+                    <li>
+                        <p>{{ post.date | date: "%b %d %Y" }}</p>
+                        {% if post.link-out %}
+                        <a href="{{ post.link-out }}">{{ post.title }}</a>
+                        {% else %}
+                        <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}    
+            </ul>
+            <a href="{{ site.baseurl }}/archive" class="btn sec">Full archive</a>
         </div>
     </div>
-    <div class="span4">
-        <h5 style="margin-bottom: 20px;">Past Blog posts</h5>
-        {% for p in site.posts limit: 9 %}
-        {% if forloop.index <= 1 %}
-        {% else %}
-        <div class="news-item">
-            <div class="news-date">{{ p.date | date: "%b %d %Y" }}</div>
-            <div class="news-title"><a href="{{ site.baseurl }}{{ p.url }}">{{ p.title }}</a></div>
-            {% comment %}
-            Workaround for https://github.com/jekyll/jekyll-archives/issues/28
-            Need to clean up html and liquid template language from the archive posts manually.
-            Curly end brace assigment to a variable is a workadound for liquid template language not being able to escape end curly brace.
-            {% endcomment %}
-            {% assign curlyend = '}' %}
-            <div class="news-body">{{ p.content | markdownify | strip_html | replace: "{% include JB/setup %", "" | replace: curlyend, "" | truncatewords: 30 }}</div>
-        </div>
-        {% endif %}
-        {% endfor %}
-        <div class="centered"><a href="{{ site.baseurl }}/archive">Full Archive</a></div>
-    </div>
-</div>
+</section>

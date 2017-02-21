@@ -1,10 +1,63 @@
 ---
-layout: page
+layout: news
 title : Archive
 header : Post Archive
 group: navigation
 ---
-{% include JB/setup %}
-
-{% assign posts_collate = site.posts %}
-{% include JB/posts_collate %}
+<section class="wrapper">
+	<div class="row">
+		<div class="ninecol">
+			<ul class="newsContainer">
+				{% for post in site.posts %}
+					<li>
+						<a href="{{ site.baseurl }}{{ post.url }}">
+							<div class="newsDate">
+								<p>{{ post.date | date: "%b" }}</p>
+								<p>{{ post.date | date: "%d" }}</p>
+								<p>{{ post.date | date: "%Y" }}</p>
+							</div>
+							<div class="newsContent">
+								<h1>{{ post.title }}</h1>
+								<p>{{ post.content | strip_html | truncatewords: 50 }}</p>
+							</div>
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+    	<div class="threecol latestArticles">
+    	    <h2>Latest news</h2>
+    	    <ul>
+    	        {% assign no_artery = "" | split: "" %}
+    	        {% for post in site.posts %}
+    	        {% unless post.categories contains 'artery' %}
+    	        {% assign no_artery = no_artery | push: post %}
+    	        {% endunless %}
+    	        {% endfor %}
+    	        {% for post in no_artery limit: 5 %}
+    	            <li>
+    	                <p>{{ post.date | date: "%b %d %Y" }}</p>
+    	                {% if post.link-out %}
+    	                <a href="{{ post.link-out }}">{{ post.title }}</a>
+    	                {% else %}
+    	                <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+    	                {% endif %}
+    	            </li>
+    	        {% endfor %}    
+    	    </ul>
+    	    <h2>Latest articles</h2>
+    	    <ul>
+    	        {% for post in site.categories.artery limit: 5 %}
+    	            <li>
+    	                <p>{{ post.date | date: "%b %d %Y" }}</p>
+    	                {% if post.link-out %}
+    	                <a href="{{ post.link-out }}">{{ post.title }}</a>
+    	                {% else %}
+    	                <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+    	                {% endif %}
+    	            </li>
+    	        {% endfor %}    
+    	    </ul>
+    	</div>
+	</div>
+</section>
