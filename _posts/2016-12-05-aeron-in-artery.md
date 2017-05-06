@@ -20,7 +20,7 @@ Somewhat outdated by now, but this is what we measured in July between two m4.4x
 * 8,245 messages/s with messages payload of 10,000 bytes
 * Round trip latency at a message rate of 10,000 messages/s: 50%ile: 155 µs, 90%ile: 173 µs, 99%ile: 196 µs
 
-The Aeron API is based on busy spinning, i.e. a message offer or poll has to be retried until it is successful. An `offer` may not be accepted if the send log buffers are full, which may be caused by the receiver being slower and thereby applying backpressure. A poll must be retried until there is a message to be be received.
+The Aeron API is based on busy spinning, i.e. a message offer or poll has to be retried until it is successful. An `offer` may not be accepted if the send log buffers are full, which may be caused by the receiver being slower and thereby applying backpressure. A poll must be retried until there is a message to be received.
 
 This is how the Aeron API can be used in a sink `GraphStage` to send a message:
 
